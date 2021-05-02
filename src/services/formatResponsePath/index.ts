@@ -1,0 +1,19 @@
+import responseFormatConfig from './responseTypes'
+import { ResponseFormatType } from './types'
+
+const formatResponsePath: any = (
+  response: any,
+  formatResponse: ResponseFormatType
+) => {
+  const strPath = responseFormatConfig(formatResponse)
+
+  const splittedPath = strPath.split('.')
+
+  splittedPath.forEach((element) => {
+    response = response[element]
+  })
+
+  return response
+}
+
+export default formatResponsePath

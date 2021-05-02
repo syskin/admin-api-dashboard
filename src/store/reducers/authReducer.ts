@@ -16,7 +16,7 @@ const initialState: AuthState = {
   success: ''
 }
 
-const authReducer = (state = initialState, action: AuthAction) => {
+const authReducer = (state = initialState, action: AuthAction): AuthState => {
   switch (action.type) {
     case SET_TOKEN:
       return {

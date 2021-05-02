@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios, { AxiosResponse } from 'axios'
 
 // Add a request interceptor
 axios.interceptors.request.use(function (config) {
@@ -17,5 +17,7 @@ const httpMethods = {
   delete: axios.delete,
   patch: axios.patch
 }
+
+export type ResponseType = AxiosResponse
 
 export default httpMethods

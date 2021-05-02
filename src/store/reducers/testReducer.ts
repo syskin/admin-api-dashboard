@@ -10,7 +10,8 @@ const initialState: TestState = {
   success: ''
 }
 
-const testReducer = (state = initialState, action: TestState) => {
+const testReducer = (state = initialState, action: TestState): TestState => {
+  action.loading = true
   return state
 }
 

@@ -1,10 +1,6 @@
 import React from 'react';
 
-interface Props {
-  name?: string;
-}
-
-const Entity: React.FC<Props> = ({ name }) => {
+const Entity: React.FC = () => {
     return (
         <h1>Entity page</h1>
     )

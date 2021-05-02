@@ -28,7 +28,7 @@ interface Props {
   routes: RouteInfo[];
 }
 
-const App: React.FC<Props> = ({ routes }) => {
+const App: React.FC<Props> = () => {
   const { authenticated } = useSelector((state: RootState) => state.auth);
   if(!authenticated) return(
     <div>

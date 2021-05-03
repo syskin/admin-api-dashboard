@@ -8,23 +8,11 @@ import {
   SIGN_OUT,
   SET_ERROR,
   SET_SUCCESS
-} from '../types'
+} from '../types/authTypes'
 import { RootState } from '..'
 import { login } from '../../api/routes/login'
 import formatResponsePath from '../../services/formatResponsePath'
 import { LOGIN_FORMAT } from '../..//services/formatResponsePath/types'
-
-// Set loading
-export const setLoading = (
-  value: boolean
-): ThunkAction<void, RootState, null, AuthAction> => {
-  return (dispatch) => {
-    dispatch({
-      type: SET_LOADING,
-      payload: value
-    })
-  }
-}
 
 // Log in
 export const signin = (
@@ -58,6 +46,18 @@ export const signout = (): ThunkAction<void, RootState, null, AuthAction> => {
     } catch (err) {
       dispatch(setLoading(false))
     }
+  }
+}
+
+// Set loading
+export const setLoading = (
+  value: boolean
+): ThunkAction<void, RootState, null, AuthAction> => {
+  return (dispatch) => {
+    dispatch({
+      type: SET_LOADING,
+      payload: value
+    })
   }
 }
 

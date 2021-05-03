@@ -1,35 +1,29 @@
 import {
-  AuthAction,
-  AuthState,
-  SET_TOKEN,
+  EntityAction,
+  EntityState,
+  SET_DATA,
   SET_LOADING,
-  SIGN_OUT,
   SET_ERROR,
   SET_SUCCESS
-} from '../types/authTypes'
+} from '../types/entityTypes'
 
-const initialState: AuthState = {
-  token: null,
-  authenticated: false,
+const initialState: EntityState = {
+  name: null,
+  data: [],
   loading: false,
   error: '',
   success: ''
 }
 
-const authReducer = (state = initialState, action: AuthAction): AuthState => {
+const entityReducer = (
+  state = initialState,
+  action: EntityAction
+): EntityState => {
   switch (action.type) {
-    case SET_TOKEN:
+    case SET_DATA:
       return {
         ...state,
-        token: action.token,
-        authenticated: true
-      }
-    case SIGN_OUT:
-      return {
-        ...state,
-        token: null,
-        authenticated: false,
-        loading: false
+        data: action.data
       }
     case SET_LOADING:
       return {
@@ -51,4 +45,4 @@ const authReducer = (state = initialState, action: AuthAction): AuthState => {
   }
 }
 
-export default authReducer
+export default entityReducer

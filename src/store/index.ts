@@ -3,7 +3,7 @@ import { persistStore, persistReducer } from 'redux-persist'
 import thunk from 'redux-thunk'
 import storage from 'redux-persist/lib/storage'
 import authReducer from './reducers/authReducer'
-// import testReducer from './reducers/testReducer'
+import entityReducer from './reducers/entityReducer'
 
 const reducers = combineReducers({
   auth: persistReducer(
@@ -13,7 +13,7 @@ const reducers = combineReducers({
     },
     authReducer
   ),
-  // test: testReducer
+  entity: entityReducer
 })
 
 /* eslint-disable  @typescript-eslint/explicit-module-boundary-types */

@@ -6,6 +6,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { PersistGate } from "redux-persist/lib/integration/react";
 import { Provider } from 'react-redux'
 import configureStore from "./store";
+import { entities } from './config/entities'
 
 const { store, persistor } = configureStore();
 
@@ -13,31 +14,27 @@ const routes = [
   {
     name: 'Home',
     path: "/",
-    private: true,
-    exact: true
+    private: true
   },
   {
     name: 'Login',
     path: "/login",
-    private: false,
-    default: true
+    private: false
   },
   {
     name: 'Entity',
     path: "/entity",
     private: true
   },
-  {
-    name: 'Users',
-    path: "/entity/users",
-    private: true
-  },
-  {
-    name: 'Recipes',
-    path: "/entity/recipes",
-    private: true
-  },
 ];
+
+entities.forEach(entity => {
+  routes.push({
+    name: entity.name,
+    path: `/entity/${entity.name.toLowerCase()}`,
+    private: true
+  })
+});
 
 ReactDOM.render(
   <React.StrictMode>

@@ -1,14 +1,15 @@
 import axios, { AxiosResponse } from 'axios'
-
-// Add a request interceptor
-axios.interceptors.request.use(function (config) {
-  axios.defaults.headers.common['Authorization'] = null
-
-  const token = localStorage['persist:auth'].token
-  if (token) axios.defaults.headers.common['Authorization'] = token
-  config.baseURL = 'http://localhost:3002/admin/'
-  return config
-})
+export const interceptor = (store: any) => {
+  axios.interceptors.request.use(function (config) {
+    axios.defaults.headers.common['Authorization'] = null
+    // const token = JSON.parse(localStorage['persist:auth']).token
+    const token = store.getState().auth.token
+    if (token)
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
+    config.baseURL = 'http://localhost:3002/admin/'
+    return config
+  })
+}
 
 const httpMethods = {
   get: axios.get,
@@ -17,6 +18,7 @@ const httpMethods = {
   delete: axios.delete,
   patch: axios.patch
 }
+export const apiClient = axios.request
 
 export type ResponseType = AxiosResponse
 

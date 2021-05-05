@@ -1,19 +1,18 @@
 import responseFormatConfig from './responseTypes'
-import { ResponseFormatType } from './types'
+import { ResponseFormatType, Payload } from './types'
 
 /* eslint-disable  @typescript-eslint/no-explicit-any */
 const formatResponsePath: any = (
   response: any,
-  formatResponse: ResponseFormatType
+  formatResponse: ResponseFormatType,
+  payload: Payload
 ) => {
-  const strPath = responseFormatConfig(formatResponse)
-
+  const strPath = responseFormatConfig(formatResponse, payload)
   const splittedPath = strPath.split('.')
 
-  splittedPath.forEach((element) => {
+  splittedPath.forEach((element: string) => {
     response = response[element]
   })
-
   return response
 }
 

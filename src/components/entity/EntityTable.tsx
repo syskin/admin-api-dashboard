@@ -8,10 +8,10 @@ interface Props {
 
 const EntityTable: React.FC<Props> = ({name}) => {
     const { data } = useSelector((state: RootState) => state.entity);
+    console.log(`Entity data`, data)
     return (
       <div>
         <h3>Table {name}</h3>
-        {data.map((entity, index) => <div key={index}>{entity.title}</div>)}
       </div>
     )
 }

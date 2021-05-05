@@ -1,12 +1,26 @@
-import { ResponseFormatType, LOGIN_FORMAT } from './types'
-import { loginResponseFormat } from '../../config/login'
+import {
+  ResponseFormatType,
+  Payload,
+  LOGIN_FORMAT,
+  ENTITY_FORMAT
+} from './types'
+import { loginResponsePath } from '../../config/login'
+import { entities } from '../../config/entities'
+import { getEntityConfiguration } from '../../utils/getEntityConfByName'
 
-const responseFormatConfig = (responseFormat: ResponseFormatType): string => {
-  switch (responseFormat.type) {
+const responseFormatConfig = (
+  responseFormat: ResponseFormatType,
+  payload: Payload
+): string => {
+  const defaultFormat = 'response'
+  switch (responseFormat) {
     case LOGIN_FORMAT:
-      return loginResponseFormat
+      return loginResponsePath
+    case ENTITY_FORMAT:
+      if (!payload) return defaultFormat
+      return payload.responsePath
     default:
-      return 'response'
+      return defaultFormat
   }
 }
 

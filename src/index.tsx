@@ -7,8 +7,10 @@ import { PersistGate } from "redux-persist/lib/integration/react";
 import { Provider } from 'react-redux'
 import configureStore from "./store";
 import { entities } from './config/entities'
-
+import { interceptor } from './api/httpService';
 const { store, persistor } = configureStore();
+
+interceptor(store)
 
 const routes = [
   {

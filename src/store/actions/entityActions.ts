@@ -1,5 +1,4 @@
 import { ThunkAction } from 'redux-thunk'
-import axios from 'axios'
 import {
   EntityAction,
   EntityFilter,
@@ -9,9 +8,10 @@ import {
   SET_SUCCESS
 } from '../types/entityTypes'
 import { RootState } from '..'
-// import {} from '../../api/routes'
+import { getAll } from '../../api/routes/entities'
 import formatResponsePath from '../../services/formatResponsePath'
-// import { } from '../../services/formatResponsePath/types'
+import { getEntityConfiguration } from '../../utils/getEntityConfByName'
+import { ENTITY_FORMAT } from '../..//services/formatResponsePath/types'
 
 // Get entity data
 export const getData = (
@@ -20,12 +20,18 @@ export const getData = (
 ): ThunkAction<void, RootState, null, EntityAction> => {
   return async (dispatch) => {
     try {
-      const posts = await axios.get(
-        'https://jsonplaceholder.typicode.com/posts'
+      const configuration = getEntityConfiguration(entityName)
+      if (!configuration) throw new Error('Entity not found')
+
+      const responsePayload = await getAll(configuration)
+      const data = formatResponsePath(
+        responsePayload.data,
+        ENTITY_FORMAT,
+        configuration.endpoints.getAll
       )
       dispatch({
         type: SET_DATA,
-        data: posts.data,
+        data,
         name: entityName
       })
     } catch (err) {

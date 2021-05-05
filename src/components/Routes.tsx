@@ -41,7 +41,7 @@ const App: React.FC<Props> = () => {
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/entity" component={Entity} />
-        <Route path="/entity/:entityName" component={EntityNameCmpt} />
+        <Route path="/entity/:entityName" component={EntityNameCmpt} key={window.location.pathname} />
         <Redirect from='*' to='/' />
       </Switch>
   </div>

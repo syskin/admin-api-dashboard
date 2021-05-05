@@ -1,1 +1,1 @@
-export const loginResponseFormat = 'response.accessToken'
+export const loginResponsePath = 'response.accessToken'

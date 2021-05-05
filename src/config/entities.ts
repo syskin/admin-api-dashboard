@@ -2,10 +2,11 @@ export const entities = [
   {
     name: 'Users',
     endpoints: {
-      getAll: true,
-      getOneById: true,
-      updateOneById: true,
-      deleteOneById: true
+      getAll: {
+        method: 'post',
+        path: '/users',
+        responsePath: 'response.users'
+      }
     },
     displayedFields: [`username`, `email`, `created`],
     defaultFilter: {
@@ -22,10 +23,11 @@ export const entities = [
   {
     name: 'Recipes',
     endpoints: {
-      getAll: true,
-      getOneById: true,
-      updateOneById: true,
-      deleteOneById: true
+      getAll: {
+        method: 'post',
+        path: '/recipes',
+        responsePath: 'response.recipes'
+      }
     },
     displayedFields: [`name`, `created`],
     defaultFilter: {

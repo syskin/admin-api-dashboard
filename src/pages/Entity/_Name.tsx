@@ -11,19 +11,13 @@ import { getEntityConfiguration } from '../../utils/getEntityConfByName'
 interface Props {
   name: string;
 }
-
 const Entity: React.FC<Props> = ({ name }) => {
     const dispatch = useDispatch();
     const location = useLocation()
-    const { error } = useSelector((state: RootState) => state.auth);
+    const { error } = useSelector((state: RootState) => state.entity);
     React.useEffect(() => {
       dispatch(getData(name, () => setLoading(false)))
-      return () => {
-        if(error) {
-          dispatch(setError(''));
-        }
-      }
-    }, [error, dispatch, location]);
+    }, [location]);
 
     return (
       <div>
@@ -33,5 +27,4 @@ const Entity: React.FC<Props> = ({ name }) => {
       </div>
     )
 }
-
 export default Entity

@@ -1,11 +1,11 @@
 import axios, { AxiosResponse } from 'axios'
 export const interceptor = (store: any) => {
   axios.interceptors.request.use(function (config) {
-    axios.defaults.headers.common['Authorization'] = null
-    // const token = JSON.parse(localStorage['persist:auth']).token
+    config.headers['Authorization'] = null
     const token = store.getState().auth.token
-    if (token)
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
+    if (token) {
+      config.headers['Authorization'] = `Bearer ${token}`
+    }
     config.baseURL = 'http://localhost:3002/admin/'
     return config
   })

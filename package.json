@@ -32,6 +32,7 @@
     "eject": "react-scripts eject",
     "lint": "eslint 'src/' --ext .ts",
     "prettier-format": "prettier --config .prettierrc 'src/**/*.ts' --write",
+    "test:coverage": "react-scripts test --coverage",
     "test:codecov": "npm run test:coverage  && codecov"
   },
   "eslintConfig": {

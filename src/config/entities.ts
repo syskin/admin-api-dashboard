@@ -3,7 +3,7 @@ export const entities = [
     name: 'Users',
     endpoints: {
       getAll: {
-        filter: false, // Filter by displayed fields, if post method : body, get: params
+        filter: false, // Filter by displayed fields, if post method : body, get: paramsé
         count: {
           responsePath: 'response.count'
         },

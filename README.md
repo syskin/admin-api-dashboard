@@ -1,7 +1,7 @@
 # ReactJS Admin API
 
 ![ci badge](https://github.com/syskin/admin-api-dashboard/workflows/CI/badge.svg)
-[![codecov](https://codecov.io/gh/syskin/admin-api-dashboard/branch/master/graph/badge.svg?token=720QPKY5L6)](https://codecov.io/gh/syskin/admin-api-dashboard)
+[![codecov](https://codecov.io/gh/syskin/admin-api-dashboard/branch/main/graph/badge.svg?token=4K00GAQQSQ)](https://codecov.io/gh/syskin/admin-api-dashboard)
 [![GitHub version](https://img.shields.io/badge/version-v1.0.0-blue.svg)](https://github.com/syskin/admin-api-dashboard)
 [![Sync Vulnerabilities Status](https://app.snyk.io/test/github/syskin/admin-api-dashboard/badge.svg)](https://snyk.io/test/github/syskin/admin-api-dashboard)
 

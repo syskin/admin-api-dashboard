@@ -6,6 +6,7 @@ export const SET_SUCCESS = 'SET_SUCCESS'
 export interface EntityState {
   name: string | null
   data: any[]
+  count: number | null
   loading: boolean
   error: string
   success: string
@@ -21,6 +22,7 @@ export interface EntityFilter {
 interface SetDataAction {
   type: typeof SET_DATA
   data: any[]
+  count: number | null
   name: string
 }
 

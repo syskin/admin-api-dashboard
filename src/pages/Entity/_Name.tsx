@@ -9,12 +9,15 @@ import EntityTable from '../../components/entity/EntityTable'
 import { getEntityConfiguration } from '../../utils/getEntityConfByName'
 
 interface Props {
-  name: string;
+  name: string
 }
 const Entity: React.FC<Props> = ({ name }) => {
-    const dispatch = useDispatch();
+    const dispatch = useDispatch()
     const location = useLocation()
-    const { error } = useSelector((state: RootState) => state.entity);
+    const { error } = useSelector((state: RootState) => state.entity)
+    const configuration = getEntityConfiguration(name)
+
+    const pagination = configuration.endpoints.getAll.pagination
     React.useEffect(() => {
       dispatch(getData(name, () => setLoading(false)))
     }, [location]);
@@ -23,7 +26,8 @@ const Entity: React.FC<Props> = ({ name }) => {
       <div>
         <h1>Entity &gt; { name }</h1>
         <div>{error}</div>
-        <EntityTable name={name} />
+        <EntityTable name={name} displayedFields={configuration.displayedFields} />
+        <div>{pagination ? 'Pagination component' : null}</div>
       </div>
     )
 }

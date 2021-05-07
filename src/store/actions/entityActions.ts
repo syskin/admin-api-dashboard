@@ -11,7 +11,7 @@ import { RootState } from '..'
 import { getAll } from '../../api/routes/entities'
 import formatResponsePath from '../../services/formatResponsePath'
 import { getEntityConfiguration } from '../../utils/getEntityConfByName'
-import { ENTITY_FORMAT } from '../..//services/formatResponsePath/types'
+import { ENTITY_FORMAT } from '../../services/formatResponsePath/types'
 
 // Get entity data
 export const getData = (
@@ -20,18 +20,37 @@ export const getData = (
 ): ThunkAction<void, RootState, null, EntityAction> => {
   return async (dispatch) => {
     try {
+      let count = null
       const configuration = getEntityConfiguration(entityName)
       if (!configuration) throw new Error('Entity not found')
 
-      const responsePayload = await getAll(configuration)
+      const responsePayload = await getAll(
+        configuration,
+        configuration.endpoints.getAll.defaultFilter
+      )
+
+      // Store data response
       const data = formatResponsePath(
         responsePayload.data,
         ENTITY_FORMAT,
         configuration.endpoints.getAll
       )
+
+      // Store count property if it is present in the response
+      if (
+        configuration.endpoints.getAll.pagination &&
+        configuration.endpoints.getAll.count
+      )
+        count = formatResponsePath(
+          responsePayload.data,
+          ENTITY_FORMAT,
+          configuration.endpoints.getAll.count
+        )
+
       dispatch({
         type: SET_DATA,
         data,
+        count,
         name: entityName
       })
     } catch (err) {

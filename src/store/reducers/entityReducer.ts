@@ -9,6 +9,7 @@ import {
 
 const initialState: EntityState = {
   name: null,
+  count: null,
   data: [],
   loading: false,
   error: '',
@@ -23,6 +24,7 @@ const entityReducer = (
     case SET_DATA:
       return {
         ...state,
+        count: action.count,
         data: action.data
       }
     case SET_LOADING:

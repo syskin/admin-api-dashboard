@@ -13,6 +13,8 @@ ExpressJS boilerplate structure with multiple datasources (Mongodb and static js
 
 ## Getting started
 
+TODO
+
 Work in progress
 
 ## Included in the project

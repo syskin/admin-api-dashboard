@@ -5,9 +5,9 @@ import App from './layout/App';
 import { BrowserRouter as Router } from "react-router-dom";
 import { PersistGate } from "redux-persist/lib/integration/react";
 import { Provider } from 'react-redux'
-import configureStore from "./store";
 import { entities } from './config/entities'
 import { interceptor } from './api/httpService';
+import configureStore from "./store";
 const { store, persistor } = configureStore();
 
 interceptor(store)

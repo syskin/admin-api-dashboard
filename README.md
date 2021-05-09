@@ -5,7 +5,7 @@
 [![GitHub version](https://img.shields.io/badge/version-v1.0.0-blue.svg)](https://github.com/syskin/admin-api-dashboard)
 [![Sync Vulnerabilities Status](https://app.snyk.io/test/github/syskin/admin-api-dashboard/badge.svg)](https://snyk.io/test/github/syskin/admin-api-dashboard)
 
-ExpressJS boilerplate structure with multiple datasources (Mongodb and static json used for demonstration) in ES5.
+ReactJS admin dashboard to manage your data through an admin API
 
 ## Requirements
 1. Node.js >= 10

@@ -35,6 +35,7 @@ export const entities = [
         count: {
           responsePath: 'response.count'
         },
+        pagination: true,
         method: 'post',
         path: '/recipes',
         responsePath: 'response.recipes'

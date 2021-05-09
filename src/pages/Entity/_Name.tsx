@@ -38,13 +38,28 @@ interface DataContentProps {
 const DataTable: React.FC<DataContentProps> = ({name}) => {
   const { entities, loading } = useSelector((state: RootState) => state.entity)
   const configuration = getEntityConfiguration(name)
+
+  let limit = 0, count = 0, page= 1
+
+  if(entities[name] && entities[name].data) {
+    count = entities[name].count
+    limit = entities[name].data.length
+    if(entities[name].filter.limit) limit = entities[name].filter.limit
+    if(entities[name].filter.page) page = entities[name].filter.page
+  }
+
   const pagination = configuration.endpoints.getAll.pagination
   if (loading || !entities[name]) return (<div>Loading...</div>)
+  if(count === 0) return (<div>
+    <Filters name={name} filter={entities[name].filter} displayedFields={configuration.displayedFields} model={configuration.model} />
+    <div>No data found</div>
+    </div>
+    )
   return (
     <div>
-      <Filters name={name} filter={entities[name].filter} />
+      <Filters name={name} filter={entities[name].filter} displayedFields={configuration.displayedFields} model={configuration.model} />
       <EntityTable data={entities[name].data} displayedFields={configuration.displayedFields} />
-      <div>{pagination ? <Pagination /> : null}</div>
+      <div>{pagination ? <Pagination name={name} limit={limit} count={count} page={page} /> : null}</div>
     </div>
   )
 }

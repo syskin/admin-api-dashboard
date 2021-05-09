@@ -9,7 +9,7 @@ export const getAll = (
   const method = configuration.endpoints.getAll.method
   let url = configuration.endpoints.getAll.path
   filter = parseFilterByMethod(method, filter)
-  console.log(filter)
+
   if (method === 'get') {
     url += filter
     return apiClient({ method, url })

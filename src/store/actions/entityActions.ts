@@ -25,7 +25,9 @@ export const getData = (
       let count = null
       const configuration = getEntityConfiguration(entityName)
       if (!configuration) throw new Error('Entity not found')
-      let searchFilter = { ...configuration.endpoints.getAll.defaultFilter }
+      let searchFilter: { [k: string]: any } = {
+        ...configuration.endpoints.getAll.defaultFilter
+      }
 
       const currentEntities = getState().entity.entities
       let currentEntity = null
@@ -34,7 +36,9 @@ export const getData = (
 
       if (currentEntity && currentEntity.filter)
         searchFilter = { ...searchFilter, ...currentEntity.filter }
-      if (filter) searchFilter = { ...searchFilter, ...filter }
+      if (filter) {
+        searchFilter = { ...searchFilter, ...filter }
+      }
 
       const responsePayload = await getAll(configuration, searchFilter)
 

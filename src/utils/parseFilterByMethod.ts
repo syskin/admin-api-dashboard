@@ -1,5 +1,8 @@
 export const parseFilterByMethod = (method: string, filter: any) => {
   if (!filter) return
+  Object.keys(filter).map((key) => {
+    if (!filter[key]) delete filter[key]
+  })
   switch (method) {
     case 'get':
       let params = '?'

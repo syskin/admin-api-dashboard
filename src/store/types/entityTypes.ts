@@ -6,7 +6,7 @@ export const SET_ERROR = 'SET_ERROR'
 export const SET_SUCCESS = 'SET_SUCCESS'
 
 export interface Entity {
-  count: number | null
+  count: number
   data: any[]
   name: string
   filter: any
@@ -29,7 +29,7 @@ export interface EntityFilter {
 interface SetDataAction {
   type: typeof SET_DATA
   data: any[]
-  count: number | null
+  count: number
   name: string
   filter: any
 }

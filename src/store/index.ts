@@ -24,5 +24,7 @@ function configureStore() {
   return { store, persistor }
 }
 
+export const { store, persistor } = configureStore()
+
 export type RootState = ReturnType<typeof reducers>
 export default configureStore

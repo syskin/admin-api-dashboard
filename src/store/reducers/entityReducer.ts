@@ -8,9 +8,7 @@ import {
 } from '../types/entityTypes'
 
 const initialState: EntityState = {
-  name: null,
-  count: null,
-  data: [],
+  entities: {},
   loading: false,
   error: '',
   success: ''
@@ -22,10 +20,18 @@ const entityReducer = (
 ): EntityState => {
   switch (action.type) {
     case SET_DATA:
+      if (!action) return { ...state }
+      const { count, data, name, filter } = action
+      state.entities[action.name] = {
+        count,
+        data,
+        name,
+        filter
+      }
+
       return {
         ...state,
-        count: action.count,
-        data: action.data
+        loading: false
       }
     case SET_LOADING:
       return {
@@ -35,7 +41,8 @@ const entityReducer = (
     case SET_ERROR:
       return {
         ...state,
-        error: action.payload
+        error: action.payload,
+        loading: false
       }
     case SET_SUCCESS:
       return {

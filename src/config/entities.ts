@@ -8,8 +8,7 @@ export const entities = [
           responsePath: 'response.count'
         },
         defaultFilter: {
-          order: { created: -1 },
-          limit: 20
+          order: { created: -1 }
         },
         pagination: true,
         method: 'post',
@@ -31,8 +30,7 @@ export const entities = [
       getAll: {
         filter: true,
         defaultFilter: {
-          order: { created: -1 },
-          limit: 20
+          order: { created: -1 }
         },
         count: {
           responsePath: 'response.count'

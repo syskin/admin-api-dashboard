@@ -1,13 +1,13 @@
 import { ThunkAction } from 'redux-thunk'
 import {
   EntityAction,
-  EntityFilter,
+  Entity,
   SET_DATA,
   SET_LOADING,
   SET_ERROR,
   SET_SUCCESS
 } from '../types/entityTypes'
-import { RootState } from '..'
+import store, { RootState } from '..'
 import { getAll } from '../../api/routes/entities'
 import formatResponsePath from '../../services/formatResponsePath'
 import { getEntityConfiguration } from '../../utils/getEntityConfByName'
@@ -16,18 +16,27 @@ import { ENTITY_FORMAT } from '../../services/formatResponsePath/types'
 // Get entity data
 export const getData = (
   entityName: string,
+  filter: any,
   onError: () => void
 ): ThunkAction<void, RootState, null, EntityAction> => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     try {
+      dispatch(setLoading(true))
       let count = null
       const configuration = getEntityConfiguration(entityName)
       if (!configuration) throw new Error('Entity not found')
+      let searchFilter = { ...configuration.endpoints.getAll.defaultFilter }
 
-      const responsePayload = await getAll(
-        configuration,
-        configuration.endpoints.getAll.defaultFilter
-      )
+      const currentEntities = getState().entity.entities
+      let currentEntity = null
+      if (currentEntities && currentEntities[entityName])
+        currentEntity = currentEntities[entityName]
+
+      if (currentEntity && currentEntity.filter)
+        searchFilter = { ...searchFilter, ...currentEntity.filter }
+      if (filter) searchFilter = { ...searchFilter, ...filter }
+
+      const responsePayload = await getAll(configuration, searchFilter)
 
       // Store data response
       const data = formatResponsePath(
@@ -46,12 +55,12 @@ export const getData = (
           ENTITY_FORMAT,
           configuration.endpoints.getAll.count
         )
-
       dispatch({
         type: SET_DATA,
         data,
         count,
-        name: entityName
+        name: entityName,
+        filter: searchFilter
       })
     } catch (err) {
       onError()

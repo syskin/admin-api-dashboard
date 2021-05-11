@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
-import { getData, setLoading } from '../../store/actions/entityActions'
+import { getTableData, setLoading } from '../../store/actions/entityActions'
 
 interface Props {
   name: string
@@ -18,8 +18,8 @@ const Filters: React.FC<Props> = ({name, filter, model, displayedFields}) => {
     const value = e.target.value || 0
     setFilterLimit(value)
 
-    if(parseInt(value) === 0) dispatch(getData(name, null, () => setLoading(false)))
-    else dispatch(getData(name, {limit: parseInt(value), page: 1}, () => setLoading(false)))
+    if(parseInt(value) === 0) dispatch(getTableData(name, null, () => setLoading(false)))
+    else dispatch(getTableData(name, {limit: parseInt(value), page: 1}, () => setLoading(false)))
   
   }
 
@@ -32,7 +32,7 @@ const Filters: React.FC<Props> = ({name, filter, model, displayedFields}) => {
       filter[field] = fields[field].value
     })
     filter.page = 1
-    dispatch(getData(name, filter, () => setLoading(false)))
+    dispatch(getTableData(name, filter, () => setLoading(false)))
   }
 
   return (

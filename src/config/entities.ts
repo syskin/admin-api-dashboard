@@ -14,10 +14,16 @@ export const entities = [
         method: 'post',
         path: '/users',
         responsePath: 'response.users'
+      },
+      getOneByIdentifier: {
+        method: 'get',
+        path: '/user/',
+        responsePath: 'response.user'
       }
     },
     displayedFields: [`username`, `email`, `created`],
     model: {
+      _id: { type: `String`, identifier: true },
       username: { type: `String` },
       email: { type: `String` },
       created: { type: `Date` }
@@ -39,10 +45,16 @@ export const entities = [
         method: 'post',
         path: '/recipes',
         responsePath: 'response.recipes'
+      },
+      getOneByIdentifier: {
+        method: 'get',
+        path: '/recipe/',
+        responsePath: 'response.recipe'
       }
     },
     displayedFields: [`name`, `created`],
     model: {
+      _id: { type: `String`, identifier: true },
       name: { type: `String` },
       created: { type: `Date` }
     },

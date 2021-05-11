@@ -1,11 +1,13 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 interface Props {
   displayedFields: string[]
   data: any[]
+  identifier: string | null
 }
 
-const EntityTable: React.FC<Props> = ({displayedFields, data}) => {
+const EntityTable: React.FC<Props> = ({displayedFields, data, identifier}) => {
   return (
     <table>
       <thead>
@@ -31,6 +33,9 @@ const EntityTable: React.FC<Props> = ({displayedFields, data}) => {
                   </td>
                 )
               })}
+              <td>
+                {identifier ? <Link to={window.location.pathname + `/${entity[identifier]}`}>Display</Link> : null}
+              </td>
             </tr>
           )
         })}
@@ -38,4 +43,7 @@ const EntityTable: React.FC<Props> = ({displayedFields, data}) => {
     </table>
   )
 }
+
+
+
 export default EntityTable

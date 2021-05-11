@@ -5,8 +5,6 @@ import {
   ENTITY_FORMAT
 } from './types'
 import { loginResponsePath } from '../../config/login'
-import { entities } from '../../config/entities'
-import { getEntityConfiguration } from '../../utils/getEntityConfByName'
 
 const responseFormatConfig = (
   responseFormat: ResponseFormatType,

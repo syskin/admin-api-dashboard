@@ -1,7 +1,7 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getData, setLoading } from '../../store/actions/entityActions';
+import { getTableData, setLoading } from '../../store/actions/entityActions';
 import { RootState } from '../../store';
 
 import Filters from '../../components/entity/Filters'
@@ -19,7 +19,7 @@ const Entity: React.FC<Props> = ({ name }) => {
     const { error } = useSelector((state: RootState) => state.entity)
 
     React.useEffect(() => {
-      dispatch(getData(name, null, () => setLoading(false)))
+      dispatch(getTableData(name, null, () => setLoading(false)))
     }, [location])
 
     return (
@@ -55,12 +55,21 @@ const DataTable: React.FC<DataContentProps> = ({name}) => {
     <div>No data found</div>
     </div>
     )
+  const model: MapModel = configuration.model
+  const identifier = Object.keys(model).find(field => {
+    if(model[field].identifier === true) return field
+  }) || null
+
   return (
     <div>
       <Filters name={name} filter={entities[name].filter} displayedFields={configuration.displayedFields} model={configuration.model} />
-      <EntityTable data={entities[name].data} displayedFields={configuration.displayedFields} />
+      <EntityTable data={entities[name].data} displayedFields={configuration.displayedFields} identifier={identifier} />
       <div>{pagination ? <Pagination name={name} limit={limit} count={count} page={page} /> : null}</div>
     </div>
   )
+}
+
+interface MapModel {
+  [key: string]: string | undefined | boolean | number | any
 }
 export default Entity

@@ -2,19 +2,20 @@ import { ThunkAction } from 'redux-thunk'
 import {
   EntityAction,
   Entity,
-  SET_DATA,
+  SET_TABLE_DATA,
+  SET_FORM_DATA,
   SET_LOADING,
   SET_ERROR,
   SET_SUCCESS
 } from '../types/entityTypes'
-import store, { RootState } from '..'
-import { getAll } from '../../api/routes/entities'
+import { RootState } from '..'
+import { getAll, getOneByIdentifier } from '../../api/routes/entities'
 import formatResponsePath from '../../services/formatResponsePath'
 import { getEntityConfiguration } from '../../utils/getEntityConfByName'
 import { ENTITY_FORMAT } from '../../services/formatResponsePath/types'
 
-// Get entity data
-export const getData = (
+// Get entity table data
+export const getTableData = (
   entityName: string,
   filter: any,
   onError: () => void
@@ -25,11 +26,12 @@ export const getData = (
       let count = null
       const configuration = getEntityConfiguration(entityName)
       if (!configuration) throw new Error('Entity not found')
-      let searchFilter: { [k: string]: any } = {
+      let searchFilter: { [key: string]: any } = {
         ...configuration.endpoints.getAll.defaultFilter
       }
 
       const currentEntities = getState().entity.entities
+
       let currentEntity = null
       if (currentEntities && currentEntities[entityName])
         currentEntity = currentEntities[entityName]
@@ -40,9 +42,9 @@ export const getData = (
         searchFilter = { ...searchFilter, ...filter }
       }
 
-      const responsePayload = await getAll(configuration, searchFilter)
+      const responsePayload = await getAll(entityName, searchFilter)
 
-      // Store data response
+      // Format data response
       const data = formatResponsePath(
         responsePayload.data,
         ENTITY_FORMAT,
@@ -60,11 +62,43 @@ export const getData = (
           configuration.endpoints.getAll.count
         )
       dispatch({
-        type: SET_DATA,
+        type: SET_TABLE_DATA,
         data,
         count,
         name: entityName,
         filter: searchFilter
+      })
+    } catch (err) {
+      onError()
+      dispatch(setError(err.message))
+    }
+  }
+}
+
+// Get entity form data
+export const getFormData = (
+  entityName: string,
+  identifier: string,
+  onError: () => void
+): ThunkAction<void, RootState, null, EntityAction> => {
+  return async (dispatch) => {
+    try {
+      dispatch(setLoading(true))
+
+      const responsePayload = await getOneByIdentifier(entityName, identifier)
+      const configuration = getEntityConfiguration(entityName)
+
+      // Format data response
+      const data = formatResponsePath(
+        responsePayload.data,
+        ENTITY_FORMAT,
+        configuration.endpoints.getOneByIdentifier
+      )
+      dispatch({
+        type: SET_FORM_DATA,
+        data,
+        name: entityName,
+        identifier
       })
     } catch (err) {
       onError()

@@ -1,11 +1,13 @@
 import Entity from '../../pages/Entity'
 
-export const SET_DATA = 'SET_DATA'
+export const SET_TABLE_DATA = 'SET_TABLE_DATA'
+export const SET_FORM_DATA = 'SET_FORM_DATA'
 export const SET_LOADING = 'SET_LOADING'
 export const SET_ERROR = 'SET_ERROR'
 export const SET_SUCCESS = 'SET_SUCCESS'
 
 export interface Entity {
+  form?: any
   count: number
   data: any[]
   name: string
@@ -26,12 +28,19 @@ export interface EntityFilter {
 }
 
 // Actions
-interface SetDataAction {
-  type: typeof SET_DATA
+interface SetTableDataAction {
+  type: typeof SET_TABLE_DATA
   data: any[]
   count: number
   name: string
   filter: any
+}
+
+interface SetFormDataAction {
+  type: typeof SET_FORM_DATA
+  data: any
+  name: string
+  identifier: string
 }
 
 interface SetLoadingAction {
@@ -50,7 +59,8 @@ interface SetSuccessAction {
 }
 
 export type EntityAction =
-  | SetDataAction
+  | SetFormDataAction
+  | SetTableDataAction
   | SetLoadingAction
   | SetErrorAction
   | SetSuccessAction

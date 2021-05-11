@@ -1,10 +1,11 @@
 import {
   EntityAction,
   EntityState,
-  SET_DATA,
+  SET_TABLE_DATA,
   SET_LOADING,
   SET_ERROR,
-  SET_SUCCESS
+  SET_SUCCESS,
+  SET_FORM_DATA
 } from '../types/entityTypes'
 
 const initialState: EntityState = {
@@ -19,15 +20,25 @@ const entityReducer = (
   action: EntityAction
 ): EntityState => {
   switch (action.type) {
-    case SET_DATA:
+    case SET_TABLE_DATA:
       if (!action) return { ...state }
       const { count, data, name, filter } = action
-      state.entities[action.name] = {
+      const newState = (state.entities[action.name] = {
         count,
         data,
         name,
         filter
+      })
+      state = { ...state, ...newState }
+
+      return {
+        ...state,
+        loading: false
       }
+    case SET_FORM_DATA:
+      if (!action) return { ...state }
+
+      state.entities[action.name].form = action.data
 
       return {
         ...state,

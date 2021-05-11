@@ -9,6 +9,7 @@ import { useSelector } from 'react-redux';
 
 import Entity from '../pages/Entity'
 import EntityName from '../pages/Entity/_Name'
+import EntityByIdentifier from '../pages/Entity/_ByIdentifier'
 import Home from '../pages/Home'
 import Login from '../pages/Login'
 
@@ -20,8 +21,13 @@ interface RouteInfo {
   private: boolean;
 }
 
-interface ParamTypes {
-  entityName: string;
+interface EntityName {
+  entityName: string
+}
+
+interface EntityIdentifier {
+  entityName: string
+  identifier: string
 }
 
 interface Props {
@@ -41,6 +47,7 @@ const App: React.FC<Props> = () => {
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/entity" component={Entity} />
+        <Route path="/entity/:entityName/:identifier" component={EntityFormCmpt} key={window.location.pathname} />
         <Route path="/entity/:entityName" component={EntityNameCmpt} key={window.location.pathname} />
         <Redirect from='*' to='/' />
       </Switch>
@@ -49,10 +56,19 @@ const App: React.FC<Props> = () => {
 }
 
 const EntityNameCmpt: React.FC = () => {
-  const { entityName } = useParams<ParamTypes>();
+  const { entityName } = useParams<EntityName>();
   return (
     <div>
       <EntityName name={entityName} />
+    </div>
+  )
+
+}
+const EntityFormCmpt: React.FC = () => {
+  const { entityName, identifier } = useParams<EntityIdentifier>();
+  return (
+    <div>
+      <EntityByIdentifier identifierKey={identifier} />
     </div>
   )
 }

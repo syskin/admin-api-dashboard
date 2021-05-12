@@ -28,7 +28,8 @@ export const entities: Configuration[] = [
       _id: { type: `String`, identifier: true },
       username: { type: `String` },
       email: { type: `String` },
-      created: { type: `Date` }
+      created: { type: `Date` },
+      emailVerified: { type: `Boolean` }
     },
     actions: []
   },

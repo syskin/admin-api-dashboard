@@ -38,6 +38,13 @@ const entityReducer = (
     case SET_FORM_DATA:
       if (!action) return { ...state }
 
+      if (!state.entities[action.name])
+        state.entities[action.name] = {
+          name: action.name,
+          data: [],
+          count: 0,
+          filter: {}
+        }
       state.entities[action.name].form = action.data
 
       return {

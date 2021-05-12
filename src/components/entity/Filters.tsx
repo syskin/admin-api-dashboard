@@ -9,7 +9,7 @@ interface Props {
   displayedFields: string[]
 }
 
-const Filters: React.FC<Props> = ({name, filter, model, displayedFields}) => {
+const Filters: React.FC<Props> = ({name, filter, displayedFields}) => {
   const dispatch = useDispatch()
   const currentLimit = filter ? filter.limit : undefined
   const [filterLimit, setFilterLimit] = React.useState(currentLimit)
@@ -26,7 +26,7 @@ const Filters: React.FC<Props> = ({name, filter, model, displayedFields}) => {
   const submitForm = (e: any) => {
     e.preventDefault();
     const fields = e.target.elements
-    const filter: {[k: string]: any} = {}
+    const filter: Record<string, any> = {}
 
     displayedFields.map((field: string) => {
       filter[field] = fields[field].value

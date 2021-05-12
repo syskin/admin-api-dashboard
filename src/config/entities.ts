@@ -1,4 +1,6 @@
-export const entities = [
+import { Configuration } from '../utils/types/EnitityConfiguration'
+
+export const entities: Configuration[] = [
   {
     name: 'Users',
     endpoints: {

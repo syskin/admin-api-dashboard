@@ -65,7 +65,7 @@ const EntityNameCmpt: React.FC = () => {
 
 }
 const EntityFormCmpt: React.FC = () => {
-  const { entityName, identifier } = useParams<EntityIdentifier>();
+  const { identifier } = useParams<EntityIdentifier>();
   return (
     <div>
       <EntityByIdentifier identifierKey={identifier} />

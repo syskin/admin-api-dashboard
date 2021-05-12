@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios'
-export const interceptor = (store: any) => {
+export const interceptor: any = (store: any) => {
   axios.interceptors.request.use(function (config) {
     config.headers['Authorization'] = null
     const token = store.getState().auth.token

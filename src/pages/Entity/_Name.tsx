@@ -1,5 +1,4 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTableData, setLoading } from '../../store/actions/entityActions';
 import { RootState } from '../../store';
@@ -8,19 +7,18 @@ import Filters from '../../components/entity/Filters'
 import EntityTable from '../../components/entity/EntityTable'
 import Pagination from '../../components/entity/Pagination'
 
-import { getEntityConfiguration } from '../../utils/getEntityConfByName'
+import getEntityConfiguration from '../../utils/getEntityConfByName'
 
 interface Props {
   name: string
 }
 const Entity: React.FC<Props> = ({ name }) => {
     const dispatch = useDispatch()
-    const location = useLocation()
     const { error } = useSelector((state: RootState) => state.entity)
 
     React.useEffect(() => {
       dispatch(getTableData(name, null, () => setLoading(false)))
-    }, [location])
+    }, [dispatch, name])
 
     return (
       <div>

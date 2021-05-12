@@ -1,7 +1,6 @@
 import { ThunkAction } from 'redux-thunk'
 import {
   EntityAction,
-  Entity,
   SET_TABLE_DATA,
   SET_FORM_DATA,
   SET_LOADING,
@@ -11,13 +10,13 @@ import {
 import { RootState } from '..'
 import { getAll, getOneByIdentifier } from '../../api/routes/entities'
 import formatResponsePath from '../../services/formatResponsePath'
-import { getEntityConfiguration } from '../../utils/getEntityConfByName'
+import getEntityConfiguration from '../../utils/getEntityConfByName'
 import { ENTITY_FORMAT } from '../../services/formatResponsePath/types'
 
 // Get entity table data
 export const getTableData = (
   entityName: string,
-  filter: any,
+  filter: Record<string, any> | null,
   onError: () => void
 ): ThunkAction<void, RootState, null, EntityAction> => {
   return async (dispatch, getState) => {
@@ -26,7 +25,7 @@ export const getTableData = (
       let count = null
       const configuration = getEntityConfiguration(entityName)
       if (!configuration) throw new Error('Entity not found')
-      let searchFilter: { [key: string]: any } = {
+      let searchFilter: Record<string, any> = {
         ...configuration.endpoints.getAll.defaultFilter
       }
 

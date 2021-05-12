@@ -1,11 +1,11 @@
 import { apiClient } from '../httpService'
 import { ResponseType } from '../httpService'
 import { parseFilterByMethod } from '../../utils/parseFilterByMethod'
-import { getEntityConfiguration } from '../../utils/getEntityConfByName'
+import getEntityConfiguration from '../../utils/getEntityConfByName'
 
 export const getAll = (
   entityName: string,
-  filter: any
+  filter: Record<string, any> | null
 ): Promise<ResponseType> => {
   return _getEndpointConfiguration(entityName, `getAll`, filter)
 }
@@ -23,9 +23,9 @@ export const getOneByIdentifier = (
 }
 
 function _getEndpointConfiguration(
-  entityName: any,
+  entityName: string,
   endpointName: string,
-  filter: any = null,
+  filter: Record<string, any> | null = null,
   identifier: string | null = null
 ) {
   const configuration: any = getEntityConfiguration(entityName)

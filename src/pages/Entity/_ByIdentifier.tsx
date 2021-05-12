@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { RootState } from '../../store';
 import { getFormData, setLoading } from '../../store/actions/entityActions';
 
@@ -13,16 +13,16 @@ interface RouteParams {
     identifier: string
 }
 
-const Entity: React.FC<Props> = ({identifierKey}) => {
+const Entity: React.FC<Props> = () => {
     const { entityName, identifier } = useParams<RouteParams>()
     const dispatch = useDispatch()
-    const location = useLocation()
 
     React.useEffect(() => {
       dispatch(getFormData(entityName, identifier, () => setLoading(false)))
-    }, [location])
+    }, [dispatch, entityName, identifier])
 
     const { entities } = useSelector((state: RootState) => state.entity)
+    console.log(entities)
     return (
         <h1>Entity identifier</h1>
     )

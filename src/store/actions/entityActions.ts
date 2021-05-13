@@ -17,6 +17,26 @@ import formatResponsePath from '../../services/formatResponsePath'
 import getEntityConfiguration from '../../utils/getEntityConfByName'
 import { ENTITY_FORMAT } from '../../services/formatResponsePath/types'
 
+// Reinitialize form data
+export const reinitializeFormData = (
+  entityName: string,
+  onError: () => void
+): ThunkAction<void, RootState, null, EntityAction> => {
+  return async (dispatch) => {
+    try {
+      dispatch(setLoading(true))
+      dispatch({
+        type: SET_FORM_DATA,
+        data: {},
+        name: entityName
+      })
+    } catch (err) {
+      onError()
+      dispatch(setError(err.message))
+    }
+  }
+}
+
 // Get entity table data
 export const getTableData = (
   entityName: string,
@@ -100,8 +120,7 @@ export const getFormData = (
       dispatch({
         type: SET_FORM_DATA,
         data,
-        name: entityName,
-        identifier
+        name: entityName
       })
     } catch (err) {
       onError()
@@ -119,7 +138,6 @@ export const updateFormData = (
 ): ThunkAction<void, RootState, null, EntityAction> => {
   return async (dispatch) => {
     try {
-      dispatch(setLoading(true))
       await updateOneByIdentifier(data, entityName, identifier)
 
       dispatch({

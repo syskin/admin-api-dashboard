@@ -37,6 +37,19 @@ export const updateOneByIdentifier = (
   )
 }
 
+export const deleteOneByIdentifier = (
+  entityName: string,
+  identifier: string | null
+): Promise<ResponseType> => {
+  return _getEndpointConfiguration(
+    entityName,
+    `deleteOneByIdentifier`,
+    null,
+    identifier,
+    false
+  )
+}
+
 function _getEndpointConfiguration(
   entityName: string,
   endpointName: string,

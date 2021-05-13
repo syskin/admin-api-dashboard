@@ -24,6 +24,9 @@ interface Endpoints {
   updateOneByIdentifier: {
     method: string
     path: string
-    responsePath: string
+  }
+  deleteOneByIdentifier: {
+    method: string
+    path: string
   }
 }

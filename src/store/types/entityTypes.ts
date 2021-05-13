@@ -40,7 +40,6 @@ interface SetFormDataAction {
   type: typeof SET_FORM_DATA
   data: any
   name: string
-  identifier: string
 }
 
 interface SetLoadingAction {

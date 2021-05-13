@@ -24,8 +24,11 @@ export const entities: Configuration[] = [
       },
       updateOneByIdentifier: {
         method: 'patch',
-        path: '/user/',
-        responsePath: 'response.user'
+        path: '/user/'
+      },
+      deleteOneByIdentifier: {
+        method: 'delete',
+        path: '/user/'
       }
     },
     displayedFields: [`username`, `email`, `created`],
@@ -61,15 +64,19 @@ export const entities: Configuration[] = [
       },
       updateOneByIdentifier: {
         method: 'patch',
-        path: '/recipe/',
-        responsePath: 'response.recipe'
+        path: '/recipe/'
+      },
+      deleteOneByIdentifier: {
+        method: 'delete',
+        path: '/recipe/'
       }
     },
     displayedFields: [`name`, `created`],
     model: {
       _id: { type: `String`, identifier: true },
       name: { type: `String` },
-      created: { type: `Date` }
+      created: { type: `Date` },
+      steps: { type: `Json` }
     },
     actions: []
   }

@@ -7,6 +7,7 @@ import { setLoading, updateFormData } from '../../store/actions/entityActions';
 import { useParams } from 'react-router-dom';
 import { RouteParams } from '../../utils/types/RouteParams';
 import { RootState } from '../../store';
+import TextArea from 'antd/lib/input/TextArea';
 
 const DynamicForm: React.FC<DynamicFormProps> = ({fields, values}) => {  
   const dispatch = useDispatch()
@@ -21,6 +22,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({fields, values}) => {
     
     Object.keys(fields).map((field: any) => {
       if (formFields[field].type === 'checkbox') fieldsValue[field] = formFields[field] ? formFields[field].checked : false
+      else if (formFields[field].type === 'textarea') fieldsValue[field] = formFields[field] ? JSON.parse(formFields[field].value) : ""
       else fieldsValue[field] = formFields[field] ? formFields[field].value : ""
     })
     dispatch(updateFormData(fieldsValue, entityName, identifier, () => setLoading(false)))
@@ -57,6 +59,14 @@ const GetInputType: React.FC<InputType> = ({name, type, value}) => {
     case 'boolean':
       const formattedValue = value ? true : false
       return (<Input placeholder={name} name={name} type="checkbox" defaultChecked={formattedValue}/>)
+    case 'json':
+    case 'array':
+      const stringifiedValue = JSON.stringify(
+        value,
+        undefined,
+        4
+      )
+      return (<TextArea placeholder={name} name={name} defaultValue={stringifiedValue}/>)
     case 'date':
       let dateValue: any = value?.toString()
       if (value) {

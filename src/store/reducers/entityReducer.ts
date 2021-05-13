@@ -46,7 +46,6 @@ const entityReducer = (
           filter: {}
         }
       state.entities[action.name].form = action.data
-
       return {
         ...state,
         loading: false

@@ -21,6 +21,11 @@ export const entities: Configuration[] = [
         method: 'get',
         path: '/user/',
         responsePath: 'response.user'
+      },
+      updateOneByIdentifier: {
+        method: 'patch',
+        path: '/user/',
+        responsePath: 'response.user'
       }
     },
     displayedFields: [`username`, `email`, `created`],
@@ -51,6 +56,11 @@ export const entities: Configuration[] = [
       },
       getOneByIdentifier: {
         method: 'get',
+        path: '/recipe/',
+        responsePath: 'response.recipe'
+      },
+      updateOneByIdentifier: {
+        method: 'patch',
         path: '/recipe/',
         responsePath: 'response.recipe'
       }

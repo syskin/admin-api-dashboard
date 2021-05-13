@@ -5,14 +5,10 @@ import DynamicForm from '../../components/form/DynamicForm';
 import { RootState } from '../../store';
 import { getFormData, setLoading } from '../../store/actions/entityActions';
 import getEntityConfiguration from '../../utils/getEntityConfByName';
+import { RouteParams } from '../../utils/types/RouteParams';
 
 interface Props {
     identifierKey: string
-}
-
-interface RouteParams {
-    entityName: string
-    identifier: string
 }
 
 const Entity: React.FC<Props> = () => {

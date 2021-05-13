@@ -1,8 +1,15 @@
-export const parseFilterByMethod: any = (method: string, filter: any) => {
+export const parseFilterByMethod: any = (
+  method: string,
+  filter: any,
+  emptyFields: boolean
+) => {
   if (!filter) return
-  Object.keys(filter).map((key) => {
-    if (!filter[key]) delete filter[key]
-  })
+
+  if (!emptyFields)
+    Object.keys(filter).map((key) => {
+      if (!filter[key]) delete filter[key]
+    })
+
   switch (method) {
     case 'get':
       let params = '?'

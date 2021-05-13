@@ -8,7 +8,11 @@ import {
   SET_SUCCESS
 } from '../types/entityTypes'
 import { RootState } from '..'
-import { getAll, getOneByIdentifier } from '../../api/routes/entities'
+import {
+  getAll,
+  getOneByIdentifier,
+  updateOneByIdentifier
+} from '../../api/routes/entities'
 import formatResponsePath from '../../services/formatResponsePath'
 import getEntityConfiguration from '../../utils/getEntityConfByName'
 import { ENTITY_FORMAT } from '../../services/formatResponsePath/types'
@@ -93,6 +97,31 @@ export const getFormData = (
         ENTITY_FORMAT,
         configuration.endpoints.getOneByIdentifier
       )
+      dispatch({
+        type: SET_FORM_DATA,
+        data,
+        name: entityName,
+        identifier
+      })
+    } catch (err) {
+      onError()
+      dispatch(setError(err.message))
+    }
+  }
+}
+
+// Update entity form
+export const updateFormData = (
+  data: Record<string, any>,
+  entityName: string,
+  identifier: string,
+  onError: () => void
+): ThunkAction<void, RootState, null, EntityAction> => {
+  return async (dispatch) => {
+    try {
+      dispatch(setLoading(true))
+      await updateOneByIdentifier(data, entityName, identifier)
+
       dispatch({
         type: SET_FORM_DATA,
         data,

@@ -1,16 +1,32 @@
 import React from 'react';
 import { timestampToDate } from '../../utils/timestampToDate';
 import { DynamicFormProps } from '../../utils/types/DynamicFrom';
+import { Input } from 'antd';
+import { useDispatch, useSelector } from 'react-redux';
+import { setLoading, updateFormData } from '../../store/actions/entityActions';
+import { useParams } from 'react-router-dom';
+import { RouteParams } from '../../utils/types/RouteParams';
+import { RootState } from '../../store';
 
 const DynamicForm: React.FC<DynamicFormProps> = ({fields, values}) => {  
+  const dispatch = useDispatch()
+  const {entityName, identifier} = useParams<RouteParams>()
+  const { loading } = useSelector((state: RootState) => state.entity)
+
   const onSubmit = (e: any) => {
     e.preventDefault();
-    const filter: Record<string, any> = {}
+
+    const fieldsValue: Record<string, any> = {}
     const formFields = e.target.elements
-    Object.keys(fields).map((field: string) => {
-      filter[field] = formFields[field] ? formFields[field].value : null
+    
+    Object.keys(fields).map((field: any) => {
+      if (formFields[field].type === 'checkbox') fieldsValue[field] = formFields[field] ? formFields[field].checked : false
+      else fieldsValue[field] = formFields[field] ? formFields[field].value : ""
     })
+    dispatch(updateFormData(fieldsValue, entityName, identifier, () => setLoading(false)))
   }
+
+  if(loading) return (<div>Loading...</div>)
   return(
     <form onSubmit={onSubmit}>
       {Object.keys(fields).map((field: any, index: number) => {
@@ -35,26 +51,23 @@ interface InputType {
 const GetInputType: React.FC<InputType> = ({name, type, value}) => {
   switch(type.toLowerCase()) {
     case 'string': 
-      return (<input placeholder={name} name={name} type="text" defaultValue={value}/>)
+      return (<Input placeholder={name} name={name} type="text" defaultValue={value}/>)
     case 'number': 
-      return (<input placeholder={name} name={name} type="number" defaultValue={value}/>)
-    case 'boolean': 
-      const parseBooleanValue: boolean = value ? true : false
-      return (<input placeholder={name} name={name} type="checkbox" checked={parseBooleanValue} onChange={inputHandler}/>)
+      return (<Input placeholder={name} name={name} type="number" defaultValue={value}/>)
+    case 'boolean':
+      const formattedValue = value ? true : false
+      return (<Input placeholder={name} name={name} type="checkbox" defaultChecked={formattedValue}/>)
     case 'date':
       let dateValue: any = value?.toString()
-      if( value) {
+      if (value) {
         dateValue = Date.parse(dateValue)
         dateValue = timestampToDate(dateValue)
       }
-      return (<input placeholder={name} name={name} type="date" defaultValue={dateValue}/>)
+      return (<Input placeholder={name} name={name} type="date" defaultValue={dateValue}/>)
     default :
       return null
   }
 }
 
-const inputHandler = () => {
-  console.log()
-}
 
 export default DynamicForm;

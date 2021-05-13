@@ -7,7 +7,7 @@ export const getAll = (
   entityName: string,
   filter: Record<string, any> | null
 ): Promise<ResponseType> => {
-  return _getEndpointConfiguration(entityName, `getAll`, filter)
+  return _getEndpointConfiguration(entityName, `getAll`, filter, null, false)
 }
 
 export const getOneByIdentifier = (
@@ -18,28 +18,50 @@ export const getOneByIdentifier = (
     entityName,
     `getOneByIdentifier`,
     null,
-    identifier
+    identifier,
+    false
+  )
+}
+
+export const updateOneByIdentifier = (
+  data: Record<string, any>,
+  entityName: string,
+  identifier: string | null
+): Promise<ResponseType> => {
+  return _getEndpointConfiguration(
+    entityName,
+    `updateOneByIdentifier`,
+    data,
+    identifier,
+    true
   )
 }
 
 function _getEndpointConfiguration(
   entityName: string,
   endpointName: string,
-  filter: Record<string, any> | null = null,
-  identifier: string | null = null
+  payload: Record<string, any> | null = null,
+  identifier: string | null = null,
+  payloadEmptyFields: boolean
 ) {
-  const configuration: any = getEntityConfiguration(entityName)
-  if (!configuration) throw new Error(`No configuration found`)
+  try {
+    const configuration: any = getEntityConfiguration(entityName)
+    if (!configuration || !configuration.endpoints[endpointName])
+      throw new Error(`Configuration files not correctly defined`)
 
-  const method = configuration.endpoints[endpointName].method || `get`
-  let url = configuration.endpoints[endpointName].path || `/`
+    const method = configuration.endpoints[endpointName].method || `get`
+    let url = configuration.endpoints[endpointName].path || `/`
 
-  if (filter) filter = parseFilterByMethod(method, filter)
-  if (identifier) url += identifier
+    if (payload)
+      payload = parseFilterByMethod(method, payload, payloadEmptyFields)
+    if (identifier) url += identifier
 
-  if (method === 'get') {
-    if (filter) url += filter
-    return apiClient({ method, url })
+    if (method === 'get') {
+      if (payload) url += payload
+      return apiClient({ method, url })
+    }
+    return apiClient({ method, url, data: payload })
+  } catch (error) {
+    return error
   }
-  return apiClient({ method, url, data: filter })
 }

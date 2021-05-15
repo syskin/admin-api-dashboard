@@ -1,6 +1,9 @@
+import { Input, Select } from 'antd'
 import React from 'react'
 import { useDispatch } from 'react-redux'
+import { toast } from 'react-toastify';
 import { getTableData, setLoading } from '../../store/actions/entityActions'
+const { Option } = Select;
 
 interface Props {
   name: string
@@ -14,15 +17,6 @@ const Filters: React.FC<Props> = ({name, filter, displayedFields}) => {
   const currentLimit = filter ? filter.limit : undefined
   const [filterLimit, setFilterLimit] = React.useState(currentLimit)
 
-  const handleChange = (e: any) => {
-    const value = e.target.value || 0
-    setFilterLimit(value)
-
-    if(parseInt(value) === 0) dispatch(getTableData(name, null, () => setLoading(false)))
-    else dispatch(getTableData(name, {limit: parseInt(value), page: 1}, () => setLoading(false)))
-  
-  }
-
   const submitForm = (e: any) => {
     e.preventDefault();
     const fields = e.target.elements
@@ -33,29 +27,36 @@ const Filters: React.FC<Props> = ({name, filter, displayedFields}) => {
     })
     filter.page = 1
     dispatch(getTableData(name, filter, () => setLoading(false)))
+    toast.info(`Filter udpdated successfully`)
+  }
+
+  const handleSelect = (value: string) => {
+    const limit = parseInt(value)
+    dispatch(getTableData(name, {...filter, limit }, () => setLoading(false)))
+    toast.info(`Filter udpdated successfully`)
   }
 
   return (
     <div>
-      <hr></hr>
+      
       Filter fields
       <form onSubmit={submitForm}>
       {displayedFields.map((field, index) => {
         return (
-          <input key={index} type="text" name={field} id={field} placeholder={field} defaultValue={filter[field]}/>
+          <Input key={index} type="text" name={field} id={field} placeholder={field} defaultValue={filter[field]}/>
         )
       })}
-      <input type="submit" value="Submit" />
+      <Input type="submit" value="Submit" />
       </form>
-      <hr></hr>
-      <select id="limit" name="limit" value={filterLimit} onChange={handleChange}>
-        <option value="0">Define</option>
-        <option value="5">5</option>
-        <option value="10">10</option>
-        <option value="25">25</option>
-        <option value="50">50</option>
-        <option value="100">100</option>
-      </select>
+      
+      <Select id="limit" defaultValue={filterLimit} onChange={handleSelect}>
+        <Option value="0">Define</Option>
+        <Option value="5">5</Option>
+        <Option value="10">10</Option>
+        <Option value="25">25</Option>
+        <Option value="50">50</Option>
+        <Option value="100">100</Option>
+      </Select>
     </div>
   )
 }

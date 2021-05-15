@@ -13,6 +13,7 @@ import { RootState } from '..'
 import { login } from '../../api/routes/login'
 import formatResponsePath from '../../services/formatResponsePath'
 import { LOGIN_FORMAT } from '../..//services/formatResponsePath/types'
+import { toast } from 'react-toastify'
 
 // Log in
 export const signin = (
@@ -31,6 +32,7 @@ export const signin = (
     } catch (err) {
       onError()
       dispatch(setError(err.message))
+      toast.error(err.message)
     }
   }
 }

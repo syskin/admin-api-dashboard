@@ -5,9 +5,9 @@ import { RootState } from '../../store';
 
 import Filters from '../../components/entity/Filters'
 import EntityTable from '../../components/entity/EntityTable'
-import Pagination from '../../components/entity/Pagination'
 
 import getEntityConfiguration from '../../utils/getEntityConfByName'
+import { Pagination } from 'antd';
 
 interface Props {
   name: string
@@ -34,6 +34,7 @@ interface DataContentProps {
 }
 
 const DataTable: React.FC<DataContentProps> = ({name}) => {
+  const dispatch = useDispatch()
   const { entities, loading } = useSelector((state: RootState) => state.entity)
   const configuration = getEntityConfiguration(name)
 
@@ -58,11 +59,17 @@ const DataTable: React.FC<DataContentProps> = ({name}) => {
     if(model[field].identifier === true) return field
   }) || null
 
+  const handleUpdatePage = (page: number) => {
+    dispatch(getTableData(name, {page}, () => setLoading(false)))
+  }
+
   return (
     <div>
       <Filters name={name} filter={entities[name].filter} displayedFields={configuration.displayedFields} model={configuration.model} />
       <EntityTable data={entities[name].data} displayedFields={configuration.displayedFields} identifier={identifier} />
-      <div>{pagination ? <Pagination name={name} limit={limit} count={count} page={page} /> : null}</div>
+      <div>{pagination ? 
+        <Pagination current={page} total={count} pageSize={limit} onChange={handleUpdatePage} showSizeChanger={false} size="small" hideOnSinglePage={true}/> : null}
+      </div>
     </div>
   )
 }

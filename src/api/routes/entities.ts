@@ -50,6 +50,15 @@ export const deleteOneByIdentifier = (
   )
 }
 
+export const executeAction = (action: Record<string, any>) => {
+  try {
+    const { url, method } = action
+    return apiClient({ method, url })
+  } catch (error) {
+    return error
+  }
+}
+
 function _getEndpointConfiguration(
   entityName: string,
   endpointName: string,
@@ -63,7 +72,7 @@ function _getEndpointConfiguration(
       throw new Error(`Configuration files not correctly defined`)
 
     const method = configuration.endpoints[endpointName].method || `get`
-    let url = configuration.endpoints[endpointName].path || `/`
+    let url = configuration.endpoints[endpointName].url || `/`
 
     if (payload)
       payload = parseFilterByMethod(method, payload, payloadEmptyFields)

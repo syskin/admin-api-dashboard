@@ -13,20 +13,20 @@ interface Endpoints {
     defaultFilter: Record<string, any>
     count: { responsePath: string }
     pagination: boolean
-    path: string
+    url: string
     responsePath: string
   }
   getOneByIdentifier: {
     method: string
-    path: string
+    url: string
     responsePath: string
   }
   updateOneByIdentifier: {
     method: string
-    path: string
+    url: string
   }
   deleteOneByIdentifier: {
     method: string
-    path: string
+    url: string
   }
 }

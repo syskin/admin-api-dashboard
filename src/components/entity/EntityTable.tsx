@@ -1,3 +1,4 @@
+import { Space, Table } from 'antd'
 import React from 'react'
 import { Link } from 'react-router-dom'
 
@@ -8,42 +9,25 @@ interface Props {
 }
 
 const EntityTable: React.FC<Props> = ({displayedFields, data, identifier}) => {
+  data = data.map((value, key) => ({...value, key}))
+  const tableHeaders = displayedFields.map((field): any => ({title: field, dataIndex: field, key: field.toLowerCase()}))
+
+  tableHeaders.push({
+    title: 'Action',
+    key: 'action',
+    name: 'test',
+    // eslint-disable-next-line react/display-name
+    render: (field: any) => (
+      <Space size="middle">
+        {identifier ? <Link to={window.location.pathname + `/${field[identifier]}`}>Display</Link> : null}
+      </Space>
+    ),
+  })
   return (
-    <table>
-      <thead>
-        <tr>
-        {displayedFields.map((field, indexCol) => {
-            return(
-              <th key={`col_${indexCol}`}>
-                {field}
-              </th>
-            )
-          })}
-          <th>Actions</th>
-          </tr>
-      </thead>
-      <tbody>
-        {data.map((entity, indexRow) => {
-          return(
-            <tr key={`row_${indexRow}`}>
-            {displayedFields.map((field, indexCol) => {
-                return(
-                  <td key={`col_${indexCol}`}>
-                    {entity[field]}
-                  </td>
-                )
-              })}
-              <td>
-                {identifier ? <Link to={window.location.pathname + `/${entity[identifier]}`}>Display</Link> : null}
-              </td>
-            </tr>
-          )
-        })}
-      </tbody>
-    </table>
+    <div>
+      <Table columns={tableHeaders} dataSource={data} size="small" pagination={false}/>
+    </div>
   )
 }
-
-
 
 export default EntityTable

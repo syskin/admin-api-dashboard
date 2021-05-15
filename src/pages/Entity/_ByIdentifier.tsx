@@ -26,7 +26,7 @@ const Entity: React.FC<Props> = () => {
     return (
         <div>
             <h1>Entity identifier</h1>
-            <Actions />
+            <Actions values={formEntityValues} />
             <DynamicForm fields={configuration.model} values={formEntityValues}/>
         </div>
     )

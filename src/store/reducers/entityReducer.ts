@@ -27,7 +27,7 @@ const entityReducer = (
         count,
         data,
         name,
-        filter
+        filter: { ...filter, limit: filter.limit || 10 }
       })
       state = { ...state, ...newState }
 
@@ -43,7 +43,7 @@ const entityReducer = (
           name: action.name,
           data: [],
           count: 0,
-          filter: {}
+          filter: { limit: 10 }
         }
       state.entities[action.name].form = action.data
       return {

@@ -16,6 +16,7 @@ import {
 import formatResponsePath from '../../services/formatResponsePath'
 import getEntityConfiguration from '../../utils/getEntityConfByName'
 import { ENTITY_FORMAT } from '../../services/formatResponsePath/types'
+import { toast } from 'react-toastify'
 
 // Reinitialize form data
 export const reinitializeFormData = (
@@ -33,6 +34,7 @@ export const reinitializeFormData = (
     } catch (err) {
       onError()
       dispatch(setError(err.message))
+      toast.error(err.message)
     }
   }
 }
@@ -94,6 +96,7 @@ export const getTableData = (
     } catch (err) {
       onError()
       dispatch(setError(err.message))
+      toast.error(err.message)
     }
   }
 }
@@ -125,6 +128,7 @@ export const getFormData = (
     } catch (err) {
       onError()
       dispatch(setError(err.message))
+      toast.error(err.message)
     }
   }
 }
@@ -146,9 +150,11 @@ export const updateFormData = (
         name: entityName,
         identifier
       })
+      toast.success(`Form updated successfully !`)
     } catch (err) {
       onError()
       dispatch(setError(err.message))
+      toast.error(err.message)
     }
   }
 }

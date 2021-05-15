@@ -14,21 +14,21 @@ export const entities: Configuration[] = [
         },
         pagination: true,
         method: 'post',
-        path: '/users',
+        url: '/users',
         responsePath: 'response.users'
       },
       getOneByIdentifier: {
         method: 'get',
-        path: '/user/',
+        url: '/user/',
         responsePath: 'response.user'
       },
       updateOneByIdentifier: {
         method: 'patch',
-        path: '/user/'
+        url: '/user/'
       },
       deleteOneByIdentifier: {
         method: 'delete',
-        path: '/user/'
+        url: '/user/'
       }
     },
     displayedFields: [`username`, `email`, `created`],
@@ -54,21 +54,21 @@ export const entities: Configuration[] = [
         },
         pagination: true,
         method: 'post',
-        path: '/recipes',
+        url: '/recipes',
         responsePath: 'response.recipes'
       },
       getOneByIdentifier: {
         method: 'get',
-        path: '/recipe/',
+        url: '/recipe/',
         responsePath: 'response.recipe'
       },
       updateOneByIdentifier: {
         method: 'patch',
-        path: '/recipe/'
+        url: '/recipe/'
       },
       deleteOneByIdentifier: {
         method: 'delete',
-        path: '/recipe/'
+        url: '/recipe/'
       }
     },
     displayedFields: [`name`, `created`],
@@ -78,6 +78,19 @@ export const entities: Configuration[] = [
       created: { type: `Date` },
       steps: { type: `Json` }
     },
-    actions: []
+    actions: [
+      {
+        name: 'Validate recipe',
+        method: 'post',
+        url: '/recipe/validate/:_id',
+        params: ['_id']
+      },
+      {
+        name: 'Refuse recipe',
+        method: 'post',
+        url: '/recipe/refuse/:_id',
+        params: ['_id']
+      }
+    ]
   }
 ]

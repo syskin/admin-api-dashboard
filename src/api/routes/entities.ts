@@ -50,7 +50,9 @@ export const deleteOneByIdentifier = (
   )
 }
 
-export const executeAction = (action: Record<string, any>) => {
+export const executeAction = (
+  action: Record<string, any>
+): Promise<ResponseType> => {
   try {
     const { url, method } = action
     return apiClient({ method, url })

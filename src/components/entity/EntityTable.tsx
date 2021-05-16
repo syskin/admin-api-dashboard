@@ -8,9 +8,17 @@ interface Props {
   identifier: string | null
 }
 
-const EntityTable: React.FC<Props> = ({displayedFields, data, identifier}) => {
-  data = data.map((value, key) => ({...value, key}))
-  const tableHeaders = displayedFields.map((field): any => ({title: field, dataIndex: field, key: field.toLowerCase()}))
+const EntityTable: React.FC<Props> = ({
+  displayedFields,
+  data,
+  identifier
+}) => {
+  data = data.map((value, key) => ({ ...value, key }))
+  const tableHeaders = displayedFields.map((field): any => ({
+    title: field,
+    dataIndex: field,
+    key: field.toLowerCase()
+  }))
 
   tableHeaders.push({
     title: 'Action',
@@ -19,13 +27,22 @@ const EntityTable: React.FC<Props> = ({displayedFields, data, identifier}) => {
     // eslint-disable-next-line react/display-name
     render: (field: any) => (
       <Space size="middle">
-        {identifier ? <Link to={window.location.pathname + `/${field[identifier]}`}>Display</Link> : null}
+        {identifier ? (
+          <Link to={window.location.pathname + `/${field[identifier]}`}>
+            Display
+          </Link>
+        ) : null}
       </Space>
-    ),
+    )
   })
   return (
     <div>
-      <Table columns={tableHeaders} dataSource={data} size="small" pagination={false}/>
+      <Table
+        columns={tableHeaders}
+        dataSource={data}
+        size="small"
+        pagination={false}
+      />
     </div>
   )
 }

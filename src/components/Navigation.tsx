@@ -1,60 +1,62 @@
 import React from 'react'
-import { useSelector, useDispatch } from 'react-redux';
-import { signout } from '../store/actions/authActions';
-import {
-  Link,
-  useHistory
-} from "react-router-dom";
+import { useSelector, useDispatch } from 'react-redux'
+import { signout } from '../store/actions/authActions'
+import { Link, useHistory } from 'react-router-dom'
 
-import { RootState } from '../store';
+import { Button, Menu } from 'antd'
+import { RootState } from '../store'
 
 interface RouteInfo {
-  name: string;
-  path: string;
-  private: boolean;
+  name: string
+  path: string
+  private: boolean
 }
 
 interface Props {
-  routes: RouteInfo[];
+  routes: RouteInfo[]
 }
 
-const Menu: React.FC<Props> = (props) => {
-    const { authenticated } = useSelector((state: RootState) => state.auth);
-    return (
-      <ul style={{ listStyleType: "none", padding: 0 }}>
-        {
-          props.routes.map((route: RouteInfo, index: number) => {
-          if(authenticated && route.private) {
-              return (
-                <li key={index}>
-                  <Link to={route.path}>{route.name}</Link>
-                </li>
-              )
-            } else if (!route.private && !authenticated) {
-              return (
-                <li key={index}>
-                  <Link to={route.path}>{route.name}</Link>
-                </li>
-              )
-            } else return (null)
-            }
+const Naviagtion: React.FC<Props> = (props) => {
+  const { authenticated } = useSelector((state: RootState) => state.auth)
+  return (
+    <Menu
+      theme="dark"
+      mode="horizontal"
+      defaultSelectedKeys={[`${window.location.pathname}`]}
+    >
+      {props.routes.map((route: RouteInfo) => {
+        if (authenticated && route.private) {
+          return (
+            <Menu.Item key={route.path}>
+              <Link to={route.path}>{route.name}</Link>
+            </Menu.Item>
+          )
+        } else if (!route.private && !authenticated) {
+          return (
+            <Menu.Item key={route.path}>
+              <Link to={route.path}>{route.name}</Link>
+            </Menu.Item>
           )
         }
-        { authenticated ? <LogoutButton /> : null }
-      </ul>
-    )
-}
-
-function LogoutButton() {
-  const dispatch = useDispatch();
-  const history = useHistory();
-  const logoutClickHandler = () => {
-    dispatch(signout());
-    history.push('/login')
-  }
-  return (
-    <button onClick={logoutClickHandler}>Logout</button>
+        return null
+      })}
+      {authenticated ? (
+        <Menu.Item>
+          <LogoutButton />
+        </Menu.Item>
+      ) : null}
+    </Menu>
   )
 }
 
-export default Menu
+function LogoutButton() {
+  const dispatch = useDispatch()
+  const history = useHistory()
+  const logoutClickHandler = () => {
+    dispatch(signout())
+    history.push('/login')
+  }
+  return <Button onClick={logoutClickHandler}>Logout</Button>
+}
+
+export default Naviagtion

@@ -1,10 +1,11 @@
 import React from 'react'
-
 import Routes from '../components/Routes'
 import Navigation from '../components/Navigation'
-import 'antd/dist/antd.css'
 import { ToastContainer } from 'react-toastify'
+
 import 'react-toastify/dist/ReactToastify.css'
+import 'antd/dist/antd.css'
+import './App.css'
 
 import { Layout } from 'antd'
 const { Header, Content, Footer } = Layout
@@ -24,7 +25,7 @@ const App: React.FC<Props> = ({ routes }) => {
       <Header>
         <Navigation routes={routes} />
       </Header>
-      <Content style={{ padding: '0 50px' }}>
+      <Content>
         <div className="site-layout-content">
           <Routes routes={routes} />
           <ToastContainer

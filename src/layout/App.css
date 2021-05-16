@@ -1,0 +1,33 @@
+/* Extra small devices */
+@media only screen and (max-width: 600px) {
+  .site-layout-content {
+    padding: 16px;
+  }
+}
+
+/* Small devices */
+@media only screen and (min-width: 600px) {
+  .site-layout-content {
+      padding: 24px;
+    }
+}
+
+/* Medium devices */
+@media only screen and (min-width: 768px) {
+  .site-layout-content {
+      padding: 48px;
+    }
+}
+
+/* Large devices */
+@media only screen and (min-width: 992px) {
+  .site-layout-content {
+    min-height: 280px;
+    padding: 72px;
+  }
+}
+
+/* Extra large devices */
+@media only screen and (min-width: 1200px) {
+
+}

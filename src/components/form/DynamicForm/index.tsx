@@ -1,13 +1,18 @@
 import React from 'react'
-import { timestampToDate } from '../../utils/timestampToDate'
-import { DynamicFormProps } from '../../utils/types/DynamicFrom'
+import { timestampToDate } from '../../../utils/timestampToDate'
+import { DynamicFormProps } from '../../../utils/types/DynamicFrom'
 import { Button, Input } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
-import { setLoading, updateFormData } from '../../store/actions/entityActions'
+import {
+  setLoading,
+  updateFormData
+} from '../../../store/actions/entityActions'
 import { useParams } from 'react-router-dom'
-import { RouteParams } from '../../utils/types/RouteParams'
-import { RootState } from '../../store'
+import { RouteParams } from '../../../utils/types/RouteParams'
+import { RootState } from '../../../store'
 import TextArea from 'antd/lib/input/TextArea'
+
+import './DynamicForm.scss'
 
 const DynamicForm: React.FC<DynamicFormProps> = ({ fields, values }) => {
   const dispatch = useDispatch()
@@ -44,7 +49,8 @@ const DynamicForm: React.FC<DynamicFormProps> = ({ fields, values }) => {
       {Object.keys(fields).map((field: any, index: number) => {
         const type = fields[field] ? fields[field].type : 'String'
         return (
-          <div key={index}>
+          <div className="input-wrapper" key={index}>
+            <label htmlFor={field}>{field}: </label>
             <GetInputType
               name={field}
               type={type}
@@ -53,7 +59,9 @@ const DynamicForm: React.FC<DynamicFormProps> = ({ fields, values }) => {
           </div>
         )
       })}
-      <Button htmlType="submit">Submit</Button>
+      <Button style={{ margin: '1em 0' }} htmlType="submit">
+        Submit
+      </Button>
     </form>
   )
 }
@@ -102,6 +110,7 @@ const GetInputType: React.FC<InputType> = ({ name, type, value }) => {
           placeholder={name}
           name={name}
           defaultValue={stringifiedValue}
+          autoSize={{ minRows: 2, maxRows: 6 }}
         />
       )
     case 'date':

@@ -3,13 +3,16 @@ import React from 'react'
 import { useDispatch } from 'react-redux'
 import { useHistory, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import { deleteOneByIdentifier, executeAction } from '../../api/routes/entities'
+import {
+  deleteOneByIdentifier,
+  executeAction
+} from '../../../api/routes/entities'
 import {
   reinitializeFormData,
   setLoading
-} from '../../store/actions/entityActions'
-import getEntityConfiguration from '../../utils/getEntityConfByName'
-import { RouteParams } from '../../utils/types/RouteParams'
+} from '../../../store/actions/entityActions'
+import getEntityConfiguration from '../../../utils/getEntityConfByName'
+import { RouteParams } from '../../../utils/types/RouteParams'
 
 interface FormProps {
   values: Record<string, any>

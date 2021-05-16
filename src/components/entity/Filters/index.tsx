@@ -1,7 +1,7 @@
 import { Input, Select } from 'antd'
 import React from 'react'
 import { useDispatch } from 'react-redux'
-import { getTableData, setLoading } from '../../store/actions/entityActions'
+import { getTableData, setLoading } from '../../../store/actions/entityActions'
 const { Option } = Select
 
 interface Props {
@@ -34,7 +34,6 @@ const Filters: React.FC<Props> = ({ name, filter, displayedFields }) => {
 
   return (
     <div>
-      Filter fields
       <form onSubmit={submitForm}>
         {displayedFields.map((field, index) => {
           return (
@@ -48,9 +47,14 @@ const Filters: React.FC<Props> = ({ name, filter, displayedFields }) => {
             />
           )
         })}
-        <Input type="submit" value="Submit" />
+        <Input style={{ maxWidth: '10em' }} type="submit" value="Submit" />
       </form>
-      <Select id="limit" defaultValue={currentLimit} onChange={handleSelect}>
+      <Select
+        style={{ float: 'right', margin: '1em 0' }}
+        id="limit"
+        defaultValue={currentLimit}
+        onChange={handleSelect}
+      >
         <Option value="0">Define</Option>
         <Option value="5">5</Option>
         <Option value="10">10</Option>

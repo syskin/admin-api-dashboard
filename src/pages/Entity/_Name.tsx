@@ -4,7 +4,7 @@ import { getTableData, setLoading } from '../../store/actions/entityActions'
 import { RootState } from '../../store'
 
 import Filters from '../../components/entity/Filters'
-import EntityTable from '../../components/entity/EntityTable'
+import Table from '../../components/entity/Table'
 
 import getEntityConfiguration from '../../utils/getEntityConfByName'
 import { Pagination } from 'antd'
@@ -81,7 +81,7 @@ const DataTable: React.FC<DataContentProps> = ({ name }) => {
         displayedFields={configuration.displayedFields}
         model={configuration.model}
       />
-      <EntityTable
+      <Table
         data={entities[name].data}
         displayedFields={configuration.displayedFields}
         identifier={identifier}

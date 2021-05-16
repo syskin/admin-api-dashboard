@@ -2,6 +2,8 @@ import { Space, Table } from 'antd'
 import React from 'react'
 import { Link } from 'react-router-dom'
 
+import './Table.css'
+
 interface Props {
   displayedFields: string[]
   data: any[]
@@ -17,7 +19,8 @@ const EntityTable: React.FC<Props> = ({
   const tableHeaders = displayedFields.map((field): any => ({
     title: field,
     dataIndex: field,
-    key: field.toLowerCase()
+    key: field.toLowerCase(),
+    ellipsis: true
   }))
 
   tableHeaders.push({
@@ -38,6 +41,7 @@ const EntityTable: React.FC<Props> = ({
   return (
     <div>
       <Table
+        className="data-table"
         columns={tableHeaders}
         dataSource={data}
         size="small"

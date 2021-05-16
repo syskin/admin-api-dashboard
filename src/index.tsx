@@ -37,14 +37,12 @@ entities.forEach(entity => {
 });
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <PersistGate persistor={persistor}>
-        <Router>
-          <App routes={routes} />
-        </Router>
-      </PersistGate>
-    </Provider>
-  </React.StrictMode>,
+  <Provider store={store}>
+    <PersistGate persistor={persistor}>
+      <Router>
+        <App routes={routes} />
+      </Router>
+    </PersistGate>
+  </Provider>,
   document.getElementById('root')
 );

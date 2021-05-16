@@ -1,7 +1,6 @@
 import { Input, Select } from 'antd'
 import React from 'react'
 import { useDispatch } from 'react-redux'
-import { toast } from 'react-toastify';
 import { getTableData, setLoading } from '../../store/actions/entityActions'
 const { Option } = Select;
 
@@ -15,7 +14,6 @@ interface Props {
 const Filters: React.FC<Props> = ({name, filter, displayedFields}) => {
   const dispatch = useDispatch()
   const currentLimit = filter ? filter.limit : undefined
-  const [filterLimit, setFilterLimit] = React.useState(currentLimit)
 
   const submitForm = (e: any) => {
     e.preventDefault();
@@ -27,13 +25,11 @@ const Filters: React.FC<Props> = ({name, filter, displayedFields}) => {
     })
     filter.page = 1
     dispatch(getTableData(name, filter, () => setLoading(false)))
-    toast.info(`Filter udpdated successfully`)
   }
 
   const handleSelect = (value: string) => {
     const limit = parseInt(value)
     dispatch(getTableData(name, {...filter, limit }, () => setLoading(false)))
-    toast.info(`Filter udpdated successfully`)
   }
 
   return (
@@ -49,7 +45,7 @@ const Filters: React.FC<Props> = ({name, filter, displayedFields}) => {
       <Input type="submit" value="Submit" />
       </form>
       
-      <Select id="limit" defaultValue={filterLimit} onChange={handleSelect}>
+      <Select id="limit" defaultValue={currentLimit} onChange={handleSelect}>
         <Option value="0">Define</Option>
         <Option value="5">5</Option>
         <Option value="10">10</Option>

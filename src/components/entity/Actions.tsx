@@ -1,4 +1,4 @@
-import { Button } from 'antd'
+import { Button, Modal } from 'antd'
 import React from 'react'
 import { useDispatch } from 'react-redux'
 import { useHistory, useParams } from 'react-router-dom'
@@ -18,46 +18,91 @@ const Actions: React.FC<FormProps> = ({values}) => {
 
     const {entityName, identifier} = useParams<RouteParams>()
     const configuration = getEntityConfiguration(entityName)
+    
+    const [visible, setVisible] = React.useState(false)
+    const [confirmLoading, setConfirmLoading] = React.useState(false);
+    const [modalText, setModalText] = React.useState('Content of the modal');
+    const [modalAction, setModalAction] = React.useState({type: 'action-type', action: {}})
+    
+    const showModal = async (payload: any) => {
+        setModalText('Are you sure to execute this action ?');
+        const { type } = payload
+        const action = payload.action ? await getAction(payload.action) : {}
+        setModalAction({type, action})
+        setVisible(true);
+    };
 
     const deleteEntityByIdentifier = async () => {
         try {
             dispatch( reinitializeFormData(entityName, () => setLoading(false) ) )
             await deleteOneByIdentifier(entityName, identifier)
-            history.push(`/entity/${entityName}`)
-            toast.info(`Data deleted successfully`)
         } catch (err) {
             toast.error(err.message)
         }
     }
 
-    const handleAction: any = async (action: any) => {
-        try {            
-            action.params.forEach((parameter: string) => {
-                const pathParameter = `:${parameter}`
-                if(action.url.includes(pathParameter) && values[parameter]) action.url = action.url.replace(pathParameter, values[parameter])
-            })
-            await executeAction(action)
+    const getAction: any = async (action: any) => {    
+        if(!action || !Object.keys(action).includes('url')) return   
+        action.params.forEach((parameter: string) => {
+            const pathParameter = `:${parameter}`
+            if(action.url.includes(pathParameter) && values[parameter]) action.url = action.url.replace(pathParameter, values[parameter])
+        })
+        return action
+    }
+
+    const handleModalOk: any = async () => {
+        let redirect = false
+        try {
+            setConfirmLoading(true);
+            switch(modalAction.type) {
+                case 'delete':
+                    await deleteEntityByIdentifier()
+                    redirect = true
+                break;
+                case 'custom-action':
+                    if(!modalAction.action) throw new Error(`Missing custom action configuration`)
+                    await executeAction(modalAction.action)
+                break;
+                default : 
+                break;
+            }
             toast.success(`Action executed successfully !`)
         } catch (err) {
             toast.error(err.message)
+        } finally {
+            setVisible(false);
+            setConfirmLoading(false);
+            if(redirect) history.push(`/entity/${entityName}`)
         }
     }
+    const handleModalCancel = () => {
+        setVisible(false);
+      };
 
 
     return (
         <div>
             <div>Actions</div>
-            <Button onClick={deleteEntityByIdentifier}>Delete</Button>
+            <Button onClick={() => showModal({type: 'delete'})}>Delete</Button>
             <div>Custom actions</div>
             <div>
                 {configuration.actions.map((action: any, index: number) => {
                     return (
-                        <Button key={index} onClick={ (e) => {handleAction(action)}}>
+                        <Button key={index} onClick={ () => {showModal({type: 'custom-action', action}) }}>
                             {action.name}
                         </Button>
                         )
                 })}
             </div>
+            <Modal
+                title="Are you sure you want to proceed this action ?"
+                visible={visible}
+                onOk={handleModalOk}
+                confirmLoading={confirmLoading}
+                onCancel={handleModalCancel}
+            >
+                <p>{modalText}</p>
+            </Modal>
         </div>
     )
 }

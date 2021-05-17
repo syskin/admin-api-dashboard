@@ -2,7 +2,7 @@ import React from 'react'
 import { Switch, Route, useParams, Redirect } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
-import Entity from '../pages/Entity'
+import Entities from '../pages/Entities'
 import EntityName from '../pages/Entity/_Name'
 import EntityByIdentifier from '../pages/Entity/_ByIdentifier'
 import Home from '../pages/Home'
@@ -43,7 +43,7 @@ const App: React.FC<Props> = () => {
       <div>
         <Switch>
           <Route exact path="/" component={Home} />
-          <Route exact path="/entity" component={Entity} />
+          <Route exact path="/entities" component={Entities} />
           <Route
             path="/entity/:entityName/:identifier"
             component={EntityFormCmpt}

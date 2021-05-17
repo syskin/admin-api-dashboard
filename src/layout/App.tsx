@@ -5,7 +5,7 @@ import { ToastContainer } from 'react-toastify'
 
 import 'react-toastify/dist/ReactToastify.css'
 import 'antd/dist/antd.css'
-import './App.css'
+import './App.scss'
 
 import { Layout } from 'antd'
 const { Header, Content, Footer } = Layout

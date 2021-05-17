@@ -1,4 +1,4 @@
-import { Input, Select } from 'antd'
+import { Button, Input, Select } from 'antd'
 import React from 'react'
 import { useDispatch } from 'react-redux'
 import { getTableData, setLoading } from '../../../store/actions/entityActions'
@@ -29,6 +29,7 @@ const Filters: React.FC<Props> = ({ name, filter, displayedFields }) => {
 
   const handleSelect = (value: string) => {
     const limit = parseInt(value)
+    filter.page = 1
     dispatch(getTableData(name, { ...filter, limit }, () => setLoading(false)))
   }
 
@@ -37,17 +38,29 @@ const Filters: React.FC<Props> = ({ name, filter, displayedFields }) => {
       <form onSubmit={submitForm}>
         {displayedFields.map((field, index) => {
           return (
-            <Input
+            <div
+              className="input-wrappper"
               key={index}
-              type="text"
-              name={field}
-              id={field}
-              placeholder={field}
-              defaultValue={filter[field]}
-            />
+              style={{ padding: '0.5em' }}
+            >
+              <Input
+                key={index}
+                type="text"
+                name={field}
+                id={field}
+                placeholder={field}
+                defaultValue={filter[field]}
+              />
+            </div>
           )
         })}
-        <Input style={{ maxWidth: '10em' }} type="submit" value="Submit" />
+        <span style={{ width: '100%' }} />
+        <Button
+          style={{ maxWidth: '10em', margin: '1em auto' }}
+          htmlType="submit"
+        >
+          Submit
+        </Button>
       </form>
       <Select
         style={{ float: 'right', margin: '1em 0' }}

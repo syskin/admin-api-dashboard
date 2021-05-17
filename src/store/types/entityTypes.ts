@@ -1,4 +1,4 @@
-import Entity from '../../pages/Entity'
+import Entity from '../../pages/Entities'
 
 export const SET_TABLE_DATA = 'SET_TABLE_DATA'
 export const SET_FORM_DATA = 'SET_FORM_DATA'

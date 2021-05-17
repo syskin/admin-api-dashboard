@@ -49,7 +49,15 @@ const DynamicForm: React.FC<DynamicFormProps> = ({ fields, values }) => {
       {Object.keys(fields).map((field: any, index: number) => {
         const type = fields[field] ? fields[field].type : 'String'
         return (
-          <div className="input-wrapper" key={index}>
+          <div
+            className={
+              type.toLocaleLowerCase() !== 'json' &&
+              type.toLocaleLowerCase() !== 'array'
+                ? 'input-wrapper'
+                : 'json-wrapper'
+            }
+            key={index}
+          >
             <label htmlFor={field}>{field}: </label>
             <GetInputType
               name={field}
@@ -59,7 +67,8 @@ const DynamicForm: React.FC<DynamicFormProps> = ({ fields, values }) => {
           </div>
         )
       })}
-      <Button style={{ margin: '1em 0' }} htmlType="submit">
+      <span style={{ width: '100%' }} />
+      <Button style={{ margin: '1em auto' }} htmlType="submit">
         Submit
       </Button>
     </form>

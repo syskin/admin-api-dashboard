@@ -16,9 +16,15 @@ This project allow you to manage your entities data through admin endpoints (fro
 
 ## Getting started
 
-# Configuration
+### Configuration
 
-# Build
+Copy paste `.env-example` to `.env` to the root folder of the project.
+
+|Key|Type|Default|Description|
+|---|----|-------|-----------|
+|AUTHENTICATION|boolean|true|Allow authentication page that stores a Bearer token to every ajax call|
+
+### Build
 TODO
 
 ## Included in the project

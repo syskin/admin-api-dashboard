@@ -31,7 +31,7 @@ interface Props {
 
 const App: React.FC<Props> = () => {
   const { authenticated } = useSelector((state: RootState) => state.auth)
-  if (!authenticated)
+  if (!authenticated && process.env.REACT_APP_AUTHENTICATION === 'true')
     return (
       <div>
         <Route path="/login" component={Login} />

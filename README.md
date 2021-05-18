@@ -22,8 +22,8 @@ Copy paste `.env-example` to `.env` to the root folder of the project.
 
 |Key|Type|Default|Description|
 |---|----|-------|-----------|
-|AUTHENTICATION|boolean|true|Allow authentication page that stores a Bearer token to every axios call|
-|BASE_URL|string|-|Define the base url of your admin API|
+|REACT_APP_AUTHENTICATION|boolean|true|Allow authentication page that stores a Bearer token to every axios call|
+|REACT_APP_BASE_URL|string|-|Define the base url of your admin API|
 
 ### Build
 TODO

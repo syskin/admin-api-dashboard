@@ -3,10 +3,10 @@ export const interceptor: any = (store: any) => {
   axios.interceptors.request.use(function (config) {
     config.headers['Authorization'] = null
     const token = store.getState().auth.token
-    if (token) {
+    if (token && process.env.REACT_APP_AUTHENTICATION === 'true') {
       config.headers['Authorization'] = `Bearer ${token}`
     }
-    config.baseURL = 'http://localhost:3002/admin/'
+    config.baseURL = process.env.REACT_APP_BASE_URL
     return config
   })
 }

@@ -2,7 +2,7 @@ import { Space, Table } from 'antd'
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-import './Table.css'
+import './Table.scss'
 
 interface Props {
   displayedFields: string[]

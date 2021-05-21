@@ -25,13 +25,20 @@ const Naviagtion: React.FC<Props> = (props) => {
       defaultSelectedKeys={[`${window.location.pathname}`]}
     >
       {props.routes.map((route: RouteInfo) => {
-        if ((authenticated && route.private) || (process.env.REACT_APP_AUTHENTICATION === 'false' && route.private)) {
+        if (
+          (authenticated && route.private) ||
+          (process.env.REACT_APP_AUTHENTICATION === 'false' && route.private)
+        ) {
           return (
             <Menu.Item key={route.path}>
               <Link to={route.path}>{route.name}</Link>
             </Menu.Item>
           )
-        } else if (!route.private && !authenticated && process.env.REACT_APP_AUTHENTICATION === 'true') {
+        } else if (
+          !route.private &&
+          !authenticated &&
+          process.env.REACT_APP_AUTHENTICATION === 'true'
+        ) {
           return (
             <Menu.Item key={route.path}>
               <Link to={route.path}>{route.name}</Link>

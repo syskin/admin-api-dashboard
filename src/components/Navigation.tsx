@@ -17,7 +17,7 @@ interface Props {
 }
 
 const Naviagtion: React.FC<Props> = (props) => {
-  const { authenticated } = useSelector((state: RootState) => state.auth)
+  const { authenticated } = useSelector((state: RootState) => state.auth)  
   return (
     <Menu
       theme="dark"

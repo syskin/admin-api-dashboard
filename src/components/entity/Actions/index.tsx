@@ -89,18 +89,18 @@ const Actions: React.FC<FormProps> = ({ values }) => {
   const handleModalCancel = () => {
     setVisible(false)
   }
-
-  return (
+  let customActions
+  
+  if(configuration.actions && configuration.actions.length > 0) {
+    customActions = 
     <div>
-      <div>Actions</div>
-      <Button onClick={() => showModal({ type: 'delete' })}>Delete</Button>
       <div>Custom actions</div>
       <div>
         {configuration.actions.map((action: any, index: number) => {
           return (
             <Button
               key={index}
-              style={{margin: '0 0.5em'}}
+              style={{marginRight: '1em'}}
               onClick={() => {
                 showModal({ type: 'custom-action', action })
               }}
@@ -110,6 +110,15 @@ const Actions: React.FC<FormProps> = ({ values }) => {
           )
         })}
       </div>
+    </div>
+  }
+  return (
+    <div>
+      <div>Actions</div>
+      <Button onClick={() => showModal({ type: 'delete' })}>Delete</Button>  
+      {customActions}
+      
+
       <Modal
         title="Are you sure you want to proceed this action ?"
         visible={visible}

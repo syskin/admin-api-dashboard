@@ -43,6 +43,7 @@ const Filters: React.FC<Props> = ({ name, filter, displayedFields }) => {
               key={index}
               style={{ padding: '0.5em' }}
             >
+              <label htmlFor={field}>{field}: </label>
               <Input
                 key={index}
                 type="text"

@@ -100,6 +100,7 @@ const Actions: React.FC<FormProps> = ({ values }) => {
           return (
             <Button
               key={index}
+              style={{margin: '0 0.5em'}}
               onClick={() => {
                 showModal({ type: 'custom-action', action })
               }}

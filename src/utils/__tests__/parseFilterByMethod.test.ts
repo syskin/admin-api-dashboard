@@ -14,8 +14,10 @@ describe('Get filter parsed by HTTP method', () => {
     expect(result).toBe(filter)
   })
   it('Test defined filter with any other HTTP method with emptyFields delete', () => {
-    const filter = { name: 'test', emptyField: undefined}
-    const result = parseFilterByMethod('post', filter, true)
+    const filter = { name: 'test', emptyField: null}
+    let result = parseFilterByMethod('post', filter, false)
+    expect(result).toBe(filter)
+    result = parseFilterByMethod('post', filter, true)
     expect(result).toBe(filter)
   })
 })

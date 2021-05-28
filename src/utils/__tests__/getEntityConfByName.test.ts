@@ -11,6 +11,6 @@ describe('Get entity configuration by its name utils method', () => {
     entities.forEach((entity: Configuration) => {
       const result = getEntityConfiguration(entity.name.toLocaleLowerCase())
       expect(result).toBe(entity)
-    });
+    })
   })
 })

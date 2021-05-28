@@ -7,7 +7,8 @@ export const parseFilterByMethod: any = (
 
   if (!emptyFields)
     Object.keys(filter).map((key) => {
-      if (!filter[key] || filter[key] === "" || filter[key] === null) delete filter[key]
+      if (!filter[key] || filter[key] === '' || filter[key] === null)
+        delete filter[key]
     })
 
   switch (method) {

@@ -90,34 +90,34 @@ const Actions: React.FC<FormProps> = ({ values }) => {
     setVisible(false)
   }
   let customActions
-  
-  if(configuration.actions && configuration.actions.length > 0) {
-    customActions = 
-    <div>
-      <div>Custom actions</div>
+
+  if (configuration.actions && configuration.actions.length > 0) {
+    customActions = (
       <div>
-        {configuration.actions.map((action: any, index: number) => {
-          return (
-            <Button
-              key={index}
-              style={{marginRight: '1em'}}
-              onClick={() => {
-                showModal({ type: 'custom-action', action })
-              }}
-            >
-              {action.name}
-            </Button>
-          )
-        })}
+        <div>Custom actions</div>
+        <div>
+          {configuration.actions.map((action: any, index: number) => {
+            return (
+              <Button
+                key={index}
+                style={{ marginRight: '1em' }}
+                onClick={() => {
+                  showModal({ type: 'custom-action', action })
+                }}
+              >
+                {action.name}
+              </Button>
+            )
+          })}
+        </div>
       </div>
-    </div>
+    )
   }
   return (
     <div>
       <div>Actions</div>
-      <Button onClick={() => showModal({ type: 'delete' })}>Delete</Button>  
+      <Button onClick={() => showModal({ type: 'delete' })}>Delete</Button>
       {customActions}
-      
 
       <Modal
         title="Are you sure you want to proceed this action ?"

@@ -1,4 +1,4 @@
-import {store, persistor} from '../'
+import { store, persistor } from '../'
 describe('Test store definition', () => {
   it('Store and persistor well defined', () => {
     expect(store).toBeDefined()

@@ -40,14 +40,10 @@ export const signin = (
 // Log out
 export const signout = (): ThunkAction<void, RootState, null, AuthAction> => {
   return (dispatch) => {
-    try {
-      dispatch(setLoading(true))
-      dispatch({
-        type: SIGN_OUT
-      })
-    } catch (err) {
-      dispatch(setLoading(false))
-    }
+    dispatch(setLoading(true))
+    dispatch({
+      type: SIGN_OUT
+    })
   }
 }
 

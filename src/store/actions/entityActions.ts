@@ -4,8 +4,7 @@ import {
   SET_TABLE_DATA,
   SET_FORM_DATA,
   SET_LOADING,
-  SET_ERROR,
-  SET_SUCCESS
+  SET_ERROR
 } from '../types/entityTypes'
 import { RootState } from '..'
 import {
@@ -20,22 +19,15 @@ import { toast } from 'react-toastify'
 
 // Reinitialize form data
 export const reinitializeFormData = (
-  entityName: string,
-  onError: () => void
+  entityName: string
 ): ThunkAction<void, RootState, null, EntityAction> => {
   return async (dispatch) => {
-    try {
-      dispatch(setLoading(true))
-      dispatch({
-        type: SET_FORM_DATA,
-        data: {},
-        name: entityName
-      })
-    } catch (err) {
-      onError()
-      dispatch(setError(err.message))
-      toast.error(err.message)
-    }
+    dispatch(setLoading(true))
+    dispatch({
+      type: SET_FORM_DATA,
+      data: {},
+      name: entityName
+    })
   }
 }
 
@@ -63,9 +55,8 @@ export const getTableData = (
 
       if (currentEntity && currentEntity.filter)
         searchFilter = { ...searchFilter, ...currentEntity.filter }
-      if (filter) {
-        searchFilter = { ...searchFilter, ...filter }
-      }
+
+      searchFilter = { ...searchFilter, ...filter }
 
       const responsePayload = await getAll(entityName, searchFilter)
 
@@ -120,6 +111,9 @@ export const getFormData = (
         ENTITY_FORMAT,
         configuration.endpoints.getOneByIdentifier
       )
+
+      if (!data) throw new Error('No data')
+
       dispatch({
         type: SET_FORM_DATA,
         data,
@@ -142,6 +136,8 @@ export const updateFormData = (
 ): ThunkAction<void, RootState, null, EntityAction> => {
   return async (dispatch) => {
     try {
+      if (!data || !entityName || !identifier)
+        throw new Error('Missing information')
       await updateOneByIdentifier(data, entityName, identifier)
 
       dispatch({
@@ -178,18 +174,6 @@ export const setError = (
   return (dispatch) => {
     dispatch({
       type: SET_ERROR,
-      payload: msg
-    })
-  }
-}
-
-// Set success
-export const setSuccess = (
-  msg: string
-): ThunkAction<void, RootState, null, EntityAction> => {
-  return (dispatch) => {
-    dispatch({
-      type: SET_SUCCESS,
       payload: msg
     })
   }

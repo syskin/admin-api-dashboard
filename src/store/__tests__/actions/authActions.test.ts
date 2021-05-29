@@ -7,14 +7,33 @@ import * as FormatResponsePath from '../../../services/formatResponsePath'
 const middlewares = [thunk]
 const mockStore = configureMockStore(middlewares)
 import * as actions from '../../actions/authActions'
-import { SET_TOKEN } from '../../types/authTypes'
-import { SET_ERROR } from '../../types/entityTypes'
+import {
+  SET_TOKEN,
+  SIGN_OUT,
+  SET_SUCCESS,
+  SET_ERROR
+} from '../../types/authTypes'
 
 describe('Test auth actions', () => {
   let store: any
 
   beforeEach(() => {
-    store = mockStore({ token: null })
+    store = mockStore({ token: null, error: null })
+  })
+
+  it('should set success message', async () => {
+    await store.dispatch(actions.setSuccess('Success'))
+    expect(store.getActions()[0]).toEqual({
+      type: SET_SUCCESS,
+      payload: 'Success'
+    })
+  })
+
+  it('should logout user while loading state is true', async () => {
+    await store.dispatch(actions.signout())
+    expect(store.getActions()[1]).toEqual({
+      type: SIGN_OUT
+    })
   })
 
   it('should login user', async () => {

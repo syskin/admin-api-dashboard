@@ -7,10 +7,7 @@ import {
   deleteOneByIdentifier,
   executeAction
 } from '../../../api/routes/entities'
-import {
-  reinitializeFormData,
-  setLoading
-} from '../../../store/actions/entityActions'
+import { reinitializeFormData } from '../../../store/actions/entityActions'
 import getEntityConfiguration from '../../../utils/getEntityConfByName'
 import { RouteParams } from '../../../utils/types/RouteParams'
 
@@ -43,7 +40,7 @@ const Actions: React.FC<FormProps> = ({ values }) => {
 
   const deleteEntityByIdentifier = async () => {
     try {
-      dispatch(reinitializeFormData(entityName, () => setLoading(false)))
+      dispatch(reinitializeFormData(entityName))
       await deleteOneByIdentifier(entityName, identifier)
     } catch (err) {
       toast.error(err.message)

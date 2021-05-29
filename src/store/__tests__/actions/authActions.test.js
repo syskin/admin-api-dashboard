@@ -15,7 +15,7 @@ import {
 } from '../../types/authTypes'
 
 describe('Test auth actions', () => {
-  let store: any
+  let store
 
   beforeEach(() => {
     store = mockStore({ token: null, error: null })
@@ -37,11 +37,11 @@ describe('Test auth actions', () => {
   })
 
   it('should login user', async () => {
-    const token: any = 'test'
+    const token = 'test'
     const spyFormatResponsePath = jest.spyOn(FormatResponsePath, 'default')
     spyFormatResponsePath.mockReturnValue(token)
 
-    const loginAnswer: any = { accessToken: token }
+    const loginAnswer = { accessToken: token }
     const spyLogin = jest.spyOn(endpoints, 'login')
     spyLogin.mockReturnValue(loginAnswer)
 
@@ -57,7 +57,7 @@ describe('Test auth actions', () => {
   })
 
   it('should not login user', async () => {
-    const loginAnswer: any = { accessToken: 'token' }
+    const loginAnswer = { accessToken: 'token' }
     const spyLogin = jest.spyOn(endpoints, 'login')
     spyLogin.mockReturnValue(loginAnswer)
 

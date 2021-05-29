@@ -4,31 +4,33 @@ import {
   SET_TABLE_DATA,
   SET_LOADING,
   SET_ERROR,
-  SET_SUCCESS,
   SET_FORM_DATA
 } from '../types/entityTypes'
 
 const initialState: EntityState = {
   entities: {},
   loading: false,
-  error: '',
-  success: ''
+  error: ''
 }
 
 const entityReducer = (
   state = initialState,
   action: EntityAction
 ): EntityState => {
+  if (!action || !action.type) return state
   switch (action.type) {
     case SET_TABLE_DATA:
-      if (!action) return { ...state }
       const { count, data, name, filter } = action
       const newState = (state.entities[action.name] = {
         count,
         data,
         name,
-        filter: { ...filter, limit: filter.limit || 10 }
+        filter: filter
       })
+
+      if (filter && !newState.filter.limit)
+        newState.filter.limit = filter.limit || 10
+
       state = { ...state, ...newState }
 
       return {
@@ -36,8 +38,6 @@ const entityReducer = (
         loading: false
       }
     case SET_FORM_DATA:
-      if (!action) return { ...state }
-
       if (!state.entities[action.name])
         state.entities[action.name] = {
           name: action.name,
@@ -60,11 +60,6 @@ const entityReducer = (
         ...state,
         error: action.payload,
         loading: false
-      }
-    case SET_SUCCESS:
-      return {
-        ...state,
-        success: action.payload
       }
     default:
       return state

@@ -18,7 +18,6 @@ export interface EntityState {
   entities: Record<Entity['name'], Entity>
   loading: boolean
   error: string
-  success: string
 }
 
 export interface EntityFilter {
@@ -52,14 +51,8 @@ interface SetErrorAction {
   payload: string
 }
 
-interface SetSuccessAction {
-  type: typeof SET_SUCCESS
-  payload: string
-}
-
 export type EntityAction =
   | SetFormDataAction
   | SetTableDataAction
   | SetLoadingAction
   | SetErrorAction
-  | SetSuccessAction

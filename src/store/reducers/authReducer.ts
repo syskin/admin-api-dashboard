@@ -17,6 +17,7 @@ const initialState: AuthState = {
 }
 
 const authReducer = (state = initialState, action: AuthAction): AuthState => {
+  if (!action || !action.type) return state
   switch (action.type) {
     case SET_TOKEN:
       return {

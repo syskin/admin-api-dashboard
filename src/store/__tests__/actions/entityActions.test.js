@@ -16,7 +16,7 @@ import {
 } from '../../types/entityTypes'
 
 describe('Test auth actions', () => {
-  let store: any
+  let store
 
   beforeEach(() => {
     store = mockStore({ entity: { entities: {} } })
@@ -42,7 +42,7 @@ describe('Test auth actions', () => {
 
   it('sould return Entity not found', async () => {
     const entityName = 'test'
-    const filter: Record<string, any> = { key: 'value' }
+    const filter = { key: 'value' }
 
     const spyGetEntityConfiguration = jest.spyOn(
       GetEntityConfiguration,
@@ -70,7 +70,7 @@ describe('Test auth actions', () => {
 
   it('sould return a basic entity table data', async () => {
     const entityName = 'test'
-    const filter: Record<string, any> = { key: 'value' }
+    const filter = { key: 'value' }
 
     const spyGetEntityConfiguration = jest.spyOn(
       GetEntityConfiguration,
@@ -84,7 +84,7 @@ describe('Test auth actions', () => {
       }
     })
 
-    const mockedResponse: any = [{ key: 'value' }]
+    const mockedResponse = [{ key: 'value' }]
     const spyGetAllEndpoint = jest.spyOn(endpoints, 'getAll')
     spyGetAllEndpoint.mockReturnValue(mockedResponse)
 
@@ -114,7 +114,7 @@ describe('Test auth actions', () => {
 
   it('sould update entity table data', async () => {
     const entityName = 'test'
-    const filter: Record<string, any> = { key: 'value' }
+    const filter = { key: 'value' }
 
     store = mockStore({
       entity: {
@@ -142,7 +142,7 @@ describe('Test auth actions', () => {
       }
     })
 
-    const mockedResponse: any = 'mockedResponse'
+    const mockedResponse = 'mockedResponse'
     const spyGetAllEndpoint = jest.spyOn(endpoints, 'getAll')
     spyGetAllEndpoint.mockReturnValue(mockedResponse)
 
@@ -185,7 +185,7 @@ describe('Test auth actions', () => {
       }
     })
 
-    const mockedResponse: any = [{ key: 'value' }]
+    const mockedResponse = [{ key: 'value' }]
     const spyGetAllEndpoint = jest.spyOn(endpoints, 'getAll')
     spyGetAllEndpoint.mockReturnValue(mockedResponse)
 
@@ -224,7 +224,7 @@ describe('Test auth actions', () => {
       }
     })
 
-    const mockedResponse: any = [{ key: 'value' }]
+    const mockedResponse = [{ key: 'value' }]
     const spyGetAllEndpoint = jest.spyOn(endpoints, 'getAll')
     spyGetAllEndpoint.mockReturnValue(mockedResponse)
 
@@ -248,7 +248,7 @@ describe('Test auth actions', () => {
   })
 
   it('sould update form data', async () => {
-    const mockedResponse: any = { key: 'value' }
+    const mockedResponse = { key: 'value' }
     const spyGetAllEndpoint = jest.spyOn(endpoints, 'updateOneByIdentifier')
     spyGetAllEndpoint.mockReturnValue(mockedResponse)
     const data = mockedResponse
@@ -271,7 +271,7 @@ describe('Test auth actions', () => {
   })
 
   it('sould return error update form data', async () => {
-    const mockedResponse: any = { key: 'value' }
+    const mockedResponse = { key: 'value' }
     const spyGetAllEndpoint = jest.spyOn(endpoints, 'updateOneByIdentifier')
     spyGetAllEndpoint.mockReturnValue(mockedResponse)
 

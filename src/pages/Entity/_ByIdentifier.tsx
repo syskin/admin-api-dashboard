@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useParams } from 'react-router-dom'
+import { useParams } from 'react-router'
 import Actions from '../../components/entity/Actions'
 import DynamicForm from '../../components/form/DynamicForm'
 import { RootState } from '../../store'
@@ -13,16 +13,18 @@ interface Props {
 }
 
 const Entity: React.FC<Props> = () => {
-  const { entityName, identifier } = useParams<RouteParams>()
+  const params: RouteParams = useParams<RouteParams>()
+  const { entityName, identifier } = params
   const dispatch = useDispatch()
   const configuration = getEntityConfiguration(entityName)
-
+  let formEntityValues = {}
   React.useEffect(() => {
     dispatch(getFormData(entityName, identifier, () => setLoading(false)))
   }, [dispatch, entityName, identifier])
 
   const { entities } = useSelector((state: RootState) => state.entity)
-  const formEntityValues = entities[entityName] ? entities[entityName].form : {}
+  console.log(params)
+  if (entities[entityName]) formEntityValues = entities[entityName].form
   return (
     <div>
       <h1>Entity identifier</h1>

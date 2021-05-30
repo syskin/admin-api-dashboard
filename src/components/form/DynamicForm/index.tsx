@@ -42,7 +42,6 @@ const DynamicForm: React.FC<DynamicFormProps> = ({ fields, values }) => {
       )
     )
   }
-  console.log(fields)
   if (loading) return <div>Loading...</div>
   return (
     <form onSubmit={onSubmit}>

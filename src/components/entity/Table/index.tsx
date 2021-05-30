@@ -15,7 +15,7 @@ const EntityTable: React.FC<Props> = ({
   data,
   identifier
 }) => {
-  data = data.map((value, key) => ({ ...value, key }))
+  if (data) data = data.map((value, key) => ({ ...value, key }))
   const tableHeaders = displayedFields.map((field): any => ({
     title: field,
     dataIndex: field,

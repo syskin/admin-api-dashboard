@@ -50,7 +50,7 @@ const Filters: React.FC<Props> = ({ name, filter, displayedFields }) => {
                 name={field}
                 id={field}
                 placeholder={field}
-                defaultValue={filter[field]}
+                defaultValue={filter && filter[field] ? filter[field] : null}
               />
             </div>
           )

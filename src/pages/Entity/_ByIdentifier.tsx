@@ -23,7 +23,6 @@ const Entity: React.FC<Props> = () => {
   }, [dispatch, entityName, identifier])
 
   const { entities } = useSelector((state: RootState) => state.entity)
-  console.log(params)
   if (entities[entityName]) formEntityValues = entities[entityName].form
   return (
     <div>

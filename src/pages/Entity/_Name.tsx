@@ -40,16 +40,28 @@ const DataTable: React.FC<DataContentProps> = ({ name }) => {
 
   let limit = 0,
     count = 0,
-    page = 1
+    page = 1,
+    pagination = false,
+    displayedFields = [],
+    configurationModel = {}
 
-  if (entities[name] && entities[name].data) {
+  if (entities[name]) {
     count = entities[name].count
-    limit = entities[name].data.length
-    if (entities[name].filter.limit) limit = entities[name].filter.limit
-    if (entities[name].filter.page) page = entities[name].filter.page
+
+    if (entities[name].data) limit = entities[name].data.length
+
+    if (entities[name].filter) {
+      if (entities[name].filter.limit) limit = entities[name].filter.limit
+      if (entities[name].filter.page) page = entities[name].filter.page
+    }
   }
 
-  const pagination = configuration.endpoints.getAll.pagination
+  if (configuration) {
+    pagination = configuration.endpoints.getAll.pagination
+    displayedFields = configuration.displayedFields
+    configurationModel = configuration.model
+  }
+
   if (loading || !entities[name]) return <div>Loading...</div>
   if (count === 0)
     return (
@@ -57,13 +69,13 @@ const DataTable: React.FC<DataContentProps> = ({ name }) => {
         <Filters
           name={name}
           filter={entities[name].filter}
-          displayedFields={configuration.displayedFields}
-          model={configuration.model}
+          displayedFields={displayedFields}
+          model={configurationModel}
         />
         <div>No data found</div>
       </div>
     )
-  const model: MapModel = configuration.model
+  const model: MapModel = configurationModel
   const identifier =
     Object.keys(model).find((field) => {
       if (model[field].identifier === true) return field
@@ -78,12 +90,12 @@ const DataTable: React.FC<DataContentProps> = ({ name }) => {
       <Filters
         name={name}
         filter={entities[name].filter}
-        displayedFields={configuration.displayedFields}
-        model={configuration.model}
+        displayedFields={displayedFields}
+        model={configurationModel}
       />
       <Table
         data={entities[name].data}
-        displayedFields={configuration.displayedFields}
+        displayedFields={displayedFields}
         identifier={identifier}
       />
       <div>

@@ -16,7 +16,7 @@ interface Props {
   routes: RouteInfo[]
 }
 
-const Naviagtion: React.FC<Props> = (props) => {
+const Navigation: React.FC<Props> = (props) => {
   const { authenticated } = useSelector((state: RootState) => state.auth)
   return (
     <Menu
@@ -66,4 +66,4 @@ function LogoutButton() {
   return <Button onClick={logoutClickHandler}>Logout</Button>
 }
 
-export default Naviagtion
+export default Navigation

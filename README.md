@@ -26,15 +26,26 @@ Copy paste `.env-example` to `.env` to the root folder of the project.
 |REACT_APP_BASE_URL|string|-|Define the base url of your admin API|
 
 ### Build
-TODO
+
+Watch development environment
+```
+yarn start
+```
+
+Build production environment
+```
+yarn build
+```
+
+Lauch production build
+```
+yarn start-build
+```
 
 ## Included in the project
 - Login interface
 - Dynamic form generation
 - Dynamic data table with filters
 - Development & production environments
-- Tests (WIP)
+- Tests >= 80% coverage
 
-## Project structure
- 
-TODO

@@ -29,13 +29,18 @@ const Actions: React.FC<FormProps> = ({ values }) => {
     type: 'action-type',
     action: {}
   })
-
+  
   const showModal = async (payload: any) => {
     setModalText('Are you sure to execute this action ?')
     const { type } = payload
-    const action = payload.action ? await getAction(payload.action) : {}
+    const action = await getAction(payload.action) || {}
     setModalAction({ type, action })
     setVisible(true)
+  }
+  
+  const handleModalCancel = () => {
+    setModalAction({ type: 'action-type', action: {} })
+    setVisible(false)
   }
 
   const deleteEntityByIdentifier = async () => {
@@ -49,12 +54,16 @@ const Actions: React.FC<FormProps> = ({ values }) => {
 
   const getAction: any = async (action: any) => {
     if (!action || !Object.keys(action).includes('url')) return
-    action.params.forEach((parameter: string) => {
+
+    const actionObject = {...action}
+
+    actionObject.params.forEach((parameter: string) => {
       const pathParameter = `:${parameter}`
-      if (action.url.includes(pathParameter) && values[parameter])
-        action.url = action.url.replace(pathParameter, values[parameter])
+      if (actionObject.url.includes(pathParameter) && values[parameter])
+        actionObject.url = actionObject.url.replace(pathParameter, values[parameter])
     })
-    return action
+    
+    return actionObject
   }
 
   const handleModalOk: any = async () => {
@@ -82,9 +91,6 @@ const Actions: React.FC<FormProps> = ({ values }) => {
       setConfirmLoading(false)
       if (redirect) history.push(`/entity/${entityName}`)
     }
-  }
-  const handleModalCancel = () => {
-    setVisible(false)
   }
   let customActions
 
